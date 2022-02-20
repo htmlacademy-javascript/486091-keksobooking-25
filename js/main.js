@@ -1,34 +1,51 @@
-const exchangeLessForMore = (num1, num2) => {
-  if (num1 < num2) {
-    [num2, num1] = [num1, num2];
+class valuesRandomizer {
+
+  constructor(minValue, maxValue, decimalCount = 0) {
+    this.minValue = minValue;
+    this.maxValue = maxValue;
+    this.decimalCount = decimalCount;
+
+    // start validate values
+    if (this.minValue < 0) {
+      this.minValue = this.transfromNegativeValueForPositive(this.minValue);
+    }
+
+    if (this.maxValue < 0) {
+      this.maxValue = this.transfromNegativeValueForPositive(this.maxValue);
+    }
+
+    if (this.minValue > this.maxValue) {
+      this.swapValues();
+    }
+
+    this.randomInteger = this.getRandomInteger();
+    this.floatNumber = this.getRandomFloat();
   }
-};
+  //finish validate valuesS
 
-const exchangeNegativeForPositive = (num1, num2) => {
-  if (num1 < 0 || num2 < 0) {
-    [num1, num2] = [Math.abs(num1), Math.abs(num2)];
+  swapValues() {
+    const temporaryValue = this.minValue;
+    this.minValue = this.maxValue;
+    this.maxValue = temporaryValue;
   }
-};
 
-const validateRandomNumbers = (value1, value2) => {
-  exchangeNegativeForPositive(value1, value2);
-  exchangeLessForMore(value1, value2);
-};
+  transfromNegativeValueForPositive(number) {
+    return Math.abs(number);
+  }
 
-const getRandomInteger = (min, max) => {
-  validateRandomNumbers(min, max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+  roundingFloatNumber(floatNumber, decimalCount) {
+    return Number(floatNumber.toFixed(decimalCount));
+  }
 
+  getRandomInteger(){
+    return Math.floor(Math.random() * (this.maxValue - this.minValue + 1)) + this.minValue;
+  }
 
-const getRandomFloat = (min, max, decimalCount=2) => {
-  validateRandomNumbers(min, max);
-  const num = Math.random() * (max - min) + min;
-  return +num.toFixed(decimalCount);
-};
+  getRandomFloat() {
+    const floatNumber = Math.random() * (this.maxValue - this.minValue) + this.minValue;
+    return this.roundingFloatNumber(floatNumber, this.decimalCount);
+  }
+}
+//Вызов класса без сохранения для устранения ошибки ESLINT
+new valuesRandomizer(-20,-3,4);
 
-//Вывод функций для того, чтобы убрать ошибку ESLint о неиспользуемых функциях
-getRandomInteger(3, 20);
-getRandomInteger(20, 3);
-getRandomFloat(2, 10);
-getRandomFloat(2, 10, 4);
