@@ -1,6 +1,6 @@
-class valuesRandomizer {
+class ValuesRandomizer {
 
-  constructor(minValue, maxValue, decimalCount = 0) {
+  constructor(minValue, maxValue, decimalCount = 2) {
     this.minValue = minValue;
     this.maxValue = maxValue;
     this.decimalCount = decimalCount;
@@ -20,8 +20,8 @@ class valuesRandomizer {
 
     this.randomInteger = this.getRandomInteger();
     this.floatNumber = this.getRandomFloat();
+    //finish validate valuesS
   }
-  //finish validate valuesS
 
   swapValues() {
     const temporaryValue = this.minValue;
@@ -47,5 +47,5 @@ class valuesRandomizer {
   }
 }
 //Вызов класса без сохранения для устранения ошибки ESLINT
-new valuesRandomizer(-20,-3,4);
+new ValuesRandomizer(-20,-3,4);
 
