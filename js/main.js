@@ -10,7 +10,7 @@ const randomizer = {
     const lower = Math.min(Math.abs(a), Math.abs(b));
     const upper = Math.max(Math.abs(a), Math.abs(b));
     const result = Math.random() * (upper - lower) + lower;
-    return +result.toFixed(digits);
+    return Number(result.toFixed(digits));
   },
 
   shuffleArray(array) {
@@ -65,11 +65,11 @@ class RandomAnnouncement {
   }
 
   createStringValueFromCounter(counter) {
-    const scrtingCount = counter.toString();
+    const stringCount = counter.toString();
     if (counter < 10) {
-      return `0${scrtingCount}`;
+      return `0${stringCount}`;
     }
-    return scrtingCount;
+    return stringCount;
   }
 
   getNewObjectWithSempleData() {
