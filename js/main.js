@@ -1,4 +1,5 @@
-import {createArrayWithDataObjects} from './random-announcement.js';
+import { oneObjectWithRandomData } from './announcement-card-creator.js';
 
-createArrayWithDataObjects();
-
+// Код только для проверки - аппендит новый элемент-объявку в карту
+const map = document.querySelector('#map-canvas');
+map.appendChild(oneObjectWithRandomData.createNew());

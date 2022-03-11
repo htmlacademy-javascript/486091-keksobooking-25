@@ -37,5 +37,5 @@ const randomizer = {
   }
 };
 
-export{randomizer};
+export{ randomizer };
 

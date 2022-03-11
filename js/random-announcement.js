@@ -1,8 +1,13 @@
-import {randomizer} from './randomizer.js';
-import {SEMPLE_DATA} from './data.js';
+import {
+  randomizer
+} from './randomizer.js';
+import {
+  SEMPLE_DATA
+} from './data.js';
 
 class RandomAnnouncement {
-  constructor(counter) {
+  constructor(counter = 10) {
+    this.counter = counter;
     this.stringCount = this.createStringValueFromCounter(counter);
     this.avatar = `img/avatars/user${this.stringCount}.png`;
     this.title = randomizer.getRandomValueFromArray(SEMPLE_DATA.titles);
@@ -20,9 +25,9 @@ class RandomAnnouncement {
     this.address = `${this.lat}, ${this.lng}`;
   }
 
-  createStringValueFromCounter(counter) {
-    const stringCount = counter.toString();
-    if (counter < 10) {
+  createStringValueFromCounter() {
+    const stringCount = this.counter.toString();
+    if (this.counter < 10) {
       return `0${stringCount}`;
     }
     return stringCount;
@@ -52,15 +57,17 @@ class RandomAnnouncement {
       }
     };
   }
+
+  createArrayWithDataObjects() {
+    const arrWithObjects = [];
+    for (let i = 1; i <= this.counter; i++) {
+      const obj = new RandomAnnouncement(i);
+      arrWithObjects.push(obj.getNewObjectWithSempleData());
+    }
+    return arrWithObjects;
+  }
 }
 
-const createArrayWithDataObjects = (count = 10) => {
-  const arrWithObjects = [];
-  for (let i = 1; i <=count; i++) {
-    const obj = new RandomAnnouncement(i);
-    arrWithObjects.push(obj.getNewObjectWithSempleData());
-  }
-  return arrWithObjects;
-};
-
-export {createArrayWithDataObjects};
+const randomAnnouncement = new RandomAnnouncement;
+const arrayWithRandomData = randomAnnouncement.createArrayWithDataObjects();
+export { arrayWithRandomData };
