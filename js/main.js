@@ -1,8 +1,8 @@
-import { oneObjectWithRandomData } from './announcement-card-creator.js';
+import { card } from './announcement-card-templater.js';
 import { Form } from './form.js';
 // Код только для проверки - аппендит новый элемент-объявку в карту
 const map = document.querySelector('#map-canvas');
-map.appendChild(oneObjectWithRandomData.createNew());
+map.appendChild(card);
 
 //Операции с формами, опять же тупо для проверки.
 const formAd = new Form('.ad-form');

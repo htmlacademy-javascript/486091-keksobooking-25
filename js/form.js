@@ -1,13 +1,12 @@
 class Form {
 
   static isMapActive()  {
-    return false; //я прекрасно понимаю, что будет отслеживаться событие загрузки карты. Но пока сделал так
+    return true; //я прекрасно понимаю, что будет отслеживаться событие загрузки карты. Но пока сделал так
   }
 
   constructor(formElementSelector) {
     this.form = document.querySelector(formElementSelector);
     this.formElements = this.form.elements;
-    this.isMapActive = true; //я прекрасно понимаю, что будет отслеживаться событие загрузки карты. Но пока сделал так
     this.formStatusHandler();
   }
 
