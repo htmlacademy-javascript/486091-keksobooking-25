@@ -1,5 +1,6 @@
 import { card } from './announcement-card-templater.js';
 import { Form } from './form.js';
+import { Map } from './map.js';
 // Код только для проверки - аппендит новый элемент-объявку в карту
 const map = document.querySelector('#map-canvas');
 map.appendChild(card);
@@ -12,7 +13,7 @@ const formFilter = new Form('.map__filters');
 //класса и даже если я не использовал переменную, это не значит, что она ничего не делает
 // пишу этот код (Гавнокод)
 
-if (!Form.isMapActive() && formAd && formFilter) { //вызов форм добавил для убирания ошибки
+if (!Map.isActive() && formAd && formFilter) { //вызов форм добавил для убирания ошибки
   //Если в классе формы isMapActive() возвращает False, до карта очищается. Но опять же
   //это сделано для еслинт
   map.innerHTML = '';
