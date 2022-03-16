@@ -1,8 +1,8 @@
-class Form {
+import {
+  Map
+} from './map.js';
 
-  static isMapActive()  {
-    return true; //я прекрасно понимаю, что будет отслеживаться событие загрузки карты. Но пока сделал так
-  }
+class Form {
 
   constructor(formElementSelector) {
     this.form = document.querySelector(formElementSelector);
@@ -11,7 +11,7 @@ class Form {
   }
 
   formStatusHandler() {
-    if (Form.isMapActive()) {
+    if (Map.isActive()) {
       this.formActivation();
     } else {
       this.formDisActivation();
@@ -35,4 +35,6 @@ class Form {
   }
 
 }
-export { Form };
+export {
+  Form
+};
