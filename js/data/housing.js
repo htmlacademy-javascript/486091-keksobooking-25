@@ -15,6 +15,7 @@ const HOUSING = {
     translate: 'Отель',
     minPrice: 3000,
   },
-}
+};
 
-export { HOUSING }
+export { HOUSING };
+
