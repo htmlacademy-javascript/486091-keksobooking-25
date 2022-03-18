@@ -1,12 +1,13 @@
 import { card } from './announcement-card-templater.js';
-import { Form } from './form.js';
+import { Form } from './form/form.js';
+import { AdForm } from './form/ad-form.js';
 import { Map } from './map.js';
 // Код только для проверки - аппендит новый элемент-объявку в карту
 const map = document.querySelector('#map-canvas');
 map.appendChild(card);
 
 //Операции с формами, опять же тупо для проверки.
-const formAd = new Form('.ad-form');
+const formAd = new AdForm('.ad-form');
 const formFilter = new Form('.map__filters');
 
 //Так как ESlint не понимают, что могут проходить операции в конструкторе

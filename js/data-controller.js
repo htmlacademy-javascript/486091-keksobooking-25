@@ -1,6 +1,4 @@
-import {
-  randomizer
-} from './randomizer.js';
+import {randomizer} from './randomizer.js';
 
 class DataController {
 
@@ -41,7 +39,7 @@ class DataController {
     const lng = randomizer.getPositiveFloat(139.70000, 139.80000, 5);
     const address = `${lat}, ${lng}`;
 
-    const object = {
+    return {
       author: {
         avatar: 'img/avatars/user10.png', // В рандомном объекте ссылка генерируется при итерации;
       },
@@ -63,21 +61,19 @@ class DataController {
         lng: lng
       }
     };
-    return object;
   }
 
   createLinkForRandomAvatar(numberOfIteration) {
-    const addZeroto = (number) => `0${number}`;
+    const addZeroTo = (number) => `0${number}`;
     if (numberOfIteration < 10) {
-      addZeroto(numberOfIteration);
+      addZeroTo(numberOfIteration);
     }
-    const avatarImgLink = `img/avatars/user${numberOfIteration}.png`;
-    return avatarImgLink;
+    return `img/avatars/user${numberOfIteration}.png`;
   }
 
-  createArrayWithRandomDataObjects(howManyArraysDoYouNeed=10) {
+  createArrayWithRandomDataObjects(howManyObjectsDoYouNeed=10) {
     const arrWithObjects = [];
-    for(let i = 1; i<=howManyArraysDoYouNeed; i++) {
+    for(let i = 1; i<=howManyObjectsDoYouNeed; i++) {
       const obj = this.createRandomDataObject();
       obj.author.avatar = this.createLinkForRandomAvatar(i);
       arrWithObjects.push(obj);
