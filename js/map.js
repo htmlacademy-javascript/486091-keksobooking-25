@@ -1,6 +1,6 @@
 class Map {
   static isActive(){
-    return false;
+    return true;
   }
 }
 
