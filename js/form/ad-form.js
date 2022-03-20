@@ -9,8 +9,20 @@ class AdForm extends Form {
 
   constructor(formElementSelector) {
     super(formElementSelector);
-    this.setPristine();
+    this.configurePristine();
+    this.initPristine();
     this.validate();
+  }
+
+  initPristine(){
+    this.pristine = new Pristine(this.form, {
+      classTo: 'ad-form__element',
+      errorClass: 'ad-form__element--invalid',
+      successClass: 'ad-form__element--valid',
+      errorTextParent: 'ad-form__element',
+      errorTextTag: 'p',
+      errorTextClass: 'ad-form__error'
+    });
   }
 
   validate() {
@@ -20,10 +32,20 @@ class AdForm extends Form {
     const type = form.querySelector('#type');
     const roomNumber = form.querySelector('#room_number');
     const capacity = form.querySelector('#capacity');
+    const timeIn = form.querySelector('#timein');
+    const timeOut = form.querySelector('#timeout');
 
     const setMinPrice = (typeOfHousing) => {
       price.min = HOUSING[typeOfHousing].minPrice;
       price.setAttribute('placeholder', HOUSING[typeOfHousing].minPrice);
+    };
+
+    const setTimeIn = () => {
+      timeIn.value = timeOut.value;
+    };
+
+    const setTimeOut = () => {
+      timeOut.value = timeIn.value;
     };
 
     setMinPrice(type.value);
@@ -73,6 +95,14 @@ class AdForm extends Form {
 
       if (evt.target === capacity || evt.target === roomNumber) {
         pristine.validate(capacity);
+      }
+
+      if (evt.target === timeIn) {
+        setTimeOut();
+      }
+
+      if (evt.target === timeOut) {
+        setTimeIn();
       }
     });
 

@@ -1,0 +1,7 @@
+.ad-form__element--invalid input {
+  border-color: red;
+}
+.ad-form__error {
+  margin-top: 0;
+  color: red;
+}
