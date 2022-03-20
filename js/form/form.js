@@ -14,9 +14,9 @@ class Form {
     this.formStatusHandler();
   }
 
-  setPristine() {
+  configurePristine() {
     const locale = 'ru';
-    const parameter = ['${', '1}'].join('');
+    const parameter = ['${', '1}'].join(''); //Костыль для обхода ESlint
     const messages = {
       required: 'Это поле обязательно к заполнению',
       email: 'Введите корректный e-mail адрес',
@@ -34,22 +34,6 @@ class Form {
     };
     Pristine.setLocale(locale);
     Pristine.addMessages(locale, messages);
-    Pristine.addValidator('input-length', (value, minlength, maxLength) => {
-      if (value >= parseInt(minlength, 10) && value <= parseInt(maxLength, 10)) {
-        return true;
-      }
-      return false;
-    });
-
-
-    this.pristine = new Pristine(this.form, {
-      classTo: 'ad-form__element',
-      errorClass: 'form__item--invalid',
-      successClass: 'form__item--valid',
-      errorTextParent: 'ad-form__element',
-      errorTextTag: 'span',
-      errorTextClass: 'form__error'
-    });
   }
 
   formStatusHandler() {
