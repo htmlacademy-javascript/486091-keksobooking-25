@@ -28,7 +28,7 @@ class AnnouncementCardTemplater {
       avatar
     } = objectWithData.author;
 
-    const cardElement = document.querySelector('#card').content.cloneNode(true);
+    const cardElement = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
     const avatarElement = cardElement.querySelector('.popup__avatar');
     const titleElement = cardElement.querySelector('.popup__title');
     const addressElement = cardElement.querySelector('.popup__text--address');
@@ -121,3 +121,7 @@ const dataController = new DataController;
 export const oneObjectWithRandomData = dataController.createRandomDataObject();
 
 export const card = new AnnouncementCardTemplater(oneObjectWithRandomData);
+
+export const points = dataController.createArrayWithRandomDataObjects();
+
+export { AnnouncementCardTemplater };

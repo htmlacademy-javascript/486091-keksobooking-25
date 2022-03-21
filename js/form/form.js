@@ -1,5 +1,5 @@
 import {
-  Map
+  isMapActive
 } from '../map.js';
 
 class Form {
@@ -37,7 +37,7 @@ class Form {
   }
 
   formStatusHandler() {
-    if (Map.isActive()) {
+    if (isMapActive) {
       this.formActivation();
     } else {
       this.formDisActivation();

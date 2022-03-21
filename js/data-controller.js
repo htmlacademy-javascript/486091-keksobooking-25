@@ -41,7 +41,7 @@ class DataController {
 
     return {
       author: {
-        avatar: 'img/avatars/user10.png', // В рандомном объекте ссылка генерируется при итерации;
+        avatar: 'img/avatars/default.png', // В рандомном объекте ссылка генерируется при итерации;
       },
       offer: {
         title: title,
@@ -66,7 +66,7 @@ class DataController {
   createLinkForRandomAvatar(numberOfIteration) {
     const addZeroTo = (number) => `0${number}`;
     if (numberOfIteration < 10) {
-      addZeroTo(numberOfIteration);
+      numberOfIteration = addZeroTo(numberOfIteration);
     }
     return `img/avatars/user${numberOfIteration}.png`;
   }
@@ -82,4 +82,6 @@ class DataController {
   }
 }
 
-export { DataController };
+const dataController = new DataController();
+
+export { DataController, dataController };
