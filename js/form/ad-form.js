@@ -25,6 +25,10 @@ class AdForm extends Form {
     });
   }
 
+  getPristine(){
+    return this.pristine;
+  }
+
   validate() {
     const form = this.form;
     const pristine = this.pristine;
@@ -86,7 +90,7 @@ class AdForm extends Form {
 
     );
 
-    form.addEventListener('change', (evt) => {
+    form.addEventListener('input', (evt) => {
       if (evt.target === type) {
         setMinPrice(type.value);
         minPrice = HOUSING[type.value].minPrice;
@@ -113,6 +117,6 @@ class AdForm extends Form {
   }
 }
 
-export {
-  AdForm
-};
+const formAd = new AdForm('.ad-form');
+
+export { formAd };

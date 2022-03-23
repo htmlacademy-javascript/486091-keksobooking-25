@@ -1,10 +1,12 @@
 import { Form } from './form.js';
 
 class FilterForm extends Form {
-  constructor() {
-    super();
+  constructor(formElementSelector) {
+    super(formElementSelector);
   }
 
 }
 
-export { FilterForm };
+const formFilter = new FilterForm('.map__filters');
+
+export { formFilter };

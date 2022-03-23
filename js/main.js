@@ -1,13 +1,16 @@
-import { card } from './announcement-card-templater.js';
-import { Form } from './form/form.js';
-import { AdForm } from './form/ad-form.js';
+import { formAd } from './form/ad-form.js';
+import { formFilter } from './form/filter-form.js';
 import { map, isMapActive } from './map.js';
+import { Slider } from './slider.js';
+
+
+const rangeSlider = new Slider('.ad-form__slider', '#price');
+
 // Код только для проверки - аппендит новый элемент-объявку в карту
 
 
-//Операции с формами, опять же тупо для проверки.
-const formAd = new AdForm('.ad-form');
-const formFilter = new Form('.map__filters');
+
+
 
 //Так как ESlint не понимают, что могут проходить операции в конструкторе
 //класса и даже если я не использовал переменную, это не значит, что она ничего не делает
@@ -19,5 +22,4 @@ if (isMapActive && formAd && formFilter) { //вызов форм добавил 
   map.innerHTML = '';
 }
 
-//Я не любитель многих комментариев, пишу для тебя, чтобы ты не спрашивал зачем я это сделал.
-// В продакшине их не будет конечно же.
+
