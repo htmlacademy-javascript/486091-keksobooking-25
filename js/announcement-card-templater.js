@@ -2,6 +2,9 @@ import {
   DataController
 } from './data-controller.js';
 
+import {
+  HOUSING
+} from './data/housing.js';
 class AnnouncementCardTemplater {
 
   constructor(objectWithData) {
@@ -55,15 +58,8 @@ class AnnouncementCardTemplater {
     this.card = cardElement;
   }
 
-  setTextContentForTypeElement(data) {
-    const typesTranslate = {
-      palace: 'Дворец',
-      flat: 'Квартира',
-      house: 'Дом',
-      bungalow: 'Бунгало',
-      hotel: 'Отель ',
-    };
-    return typesTranslate[data];
+  setTextContentForTypeElement(typeOfHousing) {
+    return HOUSING[typeOfHousing].translate;
   }
 
   fillByFeaturesItems(data, featuresWrapperElement) {
@@ -124,4 +120,6 @@ export const card = new AnnouncementCardTemplater(oneObjectWithRandomData);
 
 export const points = dataController.createArrayWithRandomDataObjects();
 
-export { AnnouncementCardTemplater };
+export {
+  AnnouncementCardTemplater
+};

@@ -1,15 +1,19 @@
 import {
-  dataController
+  MAIN_COORDINATES
+} from './data/main-coordinates.js';
+
+import {
+  points
 } from './data-controller.js';
 
 import {
   AnnouncementCardTemplater
 } from './announcement-card-templater.js';
 
-let isMapActive = false;
-
 class Map {
   constructor(mapId) {
+    this.formDisActivation('.ad-form');
+    this.formDisActivation('.map__filters');
     this.mapInit(mapId);
     this.setMapData();
     this.createMainMarker();
@@ -19,12 +23,11 @@ class Map {
   mapInit(mapId = 'map-canvas') {
     this.map = L.map(mapId)
       .on('load', () => {
-        isMapActive = true;
+        this.formActivation('.ad-form');
+        this.formActivation('.map__filters');
+        this.fillFormAddress();
       })
-      .setView({
-        lat: 35.6895000,
-        lng: 139.6917100,
-      }, 10);
+      .setView(MAIN_COORDINATES, 12);
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -34,7 +37,7 @@ class Map {
   }
 
   setMapData() {
-    this.points = dataController.createArrayWithRandomDataObjects(5);
+    this.points = points;
   }
 
   createMainMarker() {
@@ -95,11 +98,46 @@ class Map {
       this.createMarker(lat, lng, obj);
     });
   }
+
+  fillFormAddress() {
+    let { lat, lng } = MAIN_COORDINATES;
+
+
+    lat = Number(lat.toFixed(5));
+    lng = Number(lng.toFixed(5));
+    const formAddress = document.querySelector('#address');
+    formAddress.value = `${lat}, ${lng}`;
+  }
+
+  formActivation(formSelector) {
+    const form = document.querySelector(formSelector);
+
+    if (form.classList.contains('ad-form')) {
+      form.classList.remove('ad-form--disabled');
+    }
+    if (form.classList.contains('map__filters')) {
+      form.classList.remove('map__filters--disabled');
+    }
+    for (let i = 0; i < form.elements.length; i++) {
+      const element = form.elements[i];
+      element.disabled = false;
+    }
+  }
+
+  formDisActivation(formSelector) {
+    const form = document.querySelector(formSelector);
+
+    if (form.classList.contains('ad-form')) {
+      form.classList.add('ad-form--disabled');
+    }
+    if (form.classList.contains('map__filters')) {
+      form.classList.add('map__filters--disabled');
+    }
+    for (let i = 0; i < form.elements.length; i++) {
+      const element = form.elements[i];
+      element.disabled = true;
+    }
+  }
 }
 
-const map = new Map();
-export {
-  map,
-  Map,
-  isMapActive
-};
+export const map = new Map();

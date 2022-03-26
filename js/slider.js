@@ -1,6 +1,4 @@
-import {
-  formAd
-} from './form/ad-form.js';
+import { formAd } from './form/ad-form.js';
 
 class Slider {
 
@@ -14,7 +12,7 @@ class Slider {
 
   setSliderConfiguration() {
     noUiSlider.create(this.sliderElement, {
-      start: [1000],
+      start: [0],
       step: 1,
       range: {
         'min': [0],
@@ -37,16 +35,23 @@ class Slider {
   }
 
   eventsHandler() {
-    const slider = this.sliderElement;
-    slider.noUiSlider.on('slide', () => {
-      this.input.value = Number(slider.noUiSlider.get());
+
+    const sliderElement = this.sliderElement;
+    sliderElement.noUiSlider.on('slide', () => {
+      this.input.value = Number(sliderElement.noUiSlider.get());
       this.pristine.validate(this.input);
     });
 
     this.input.addEventListener('change', () => {
-      slider.noUiSlider.set(this.input.value);
+      sliderElement.noUiSlider.set(this.input.value);
+    });
+
+    const resetButton = document.querySelector('.ad-form__reset');
+    resetButton.addEventListener('click', () => {
+      sliderElement.noUiSlider.reset();
     });
   }
 }
 
-export { Slider };
+export const slider = new Slider('.ad-form__slider', '#price');
+

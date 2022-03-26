@@ -4,4 +4,5 @@
 .ad-form__error {
   margin-top: 0;
   color: red;
+  width: calc(100% - 20px);
 }
