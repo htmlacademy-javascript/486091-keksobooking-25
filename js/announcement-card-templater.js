@@ -2,6 +2,9 @@ import {
   DataController
 } from './data-controller.js';
 
+import {
+  HOUSING
+} from './data/housing.js';
 class AnnouncementCardTemplater {
 
   constructor(objectWithData) {
@@ -28,7 +31,7 @@ class AnnouncementCardTemplater {
       avatar
     } = objectWithData.author;
 
-    const cardElement = document.querySelector('#card').content.cloneNode(true);
+    const cardElement = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
     const avatarElement = cardElement.querySelector('.popup__avatar');
     const titleElement = cardElement.querySelector('.popup__title');
     const addressElement = cardElement.querySelector('.popup__text--address');
@@ -55,15 +58,8 @@ class AnnouncementCardTemplater {
     this.card = cardElement;
   }
 
-  setTextContentForTypeElement(data) {
-    const typesTranslate = {
-      palace: 'Дворец',
-      flat: 'Квартира',
-      house: 'Дом',
-      bungalow: 'Бунгало',
-      hotel: 'Отель ',
-    };
-    return typesTranslate[data];
+  setTextContentForTypeElement(typeOfHousing) {
+    return HOUSING[typeOfHousing].translate;
   }
 
   fillByFeaturesItems(data, featuresWrapperElement) {
@@ -121,3 +117,9 @@ const dataController = new DataController;
 export const oneObjectWithRandomData = dataController.createRandomDataObject();
 
 export const card = new AnnouncementCardTemplater(oneObjectWithRandomData);
+
+export const points = dataController.createArrayWithRandomDataObjects();
+
+export {
+  AnnouncementCardTemplater
+};

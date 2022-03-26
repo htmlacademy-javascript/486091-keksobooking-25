@@ -5,6 +5,10 @@ import {
   HOUSING
 } from '../data/housing.js';
 
+import {
+  map
+} from './../map.js';
+
 class AdForm extends Form {
 
   constructor(formElementSelector) {
@@ -12,6 +16,8 @@ class AdForm extends Form {
     this.configurePristine();
     this.initPristine();
     this.validate();
+    this.resetHandler();
+
   }
 
   initPristine(){
@@ -25,6 +31,10 @@ class AdForm extends Form {
     });
   }
 
+  getPristine(){
+    return this.pristine;
+  }
+
   validate() {
     const form = this.form;
     const pristine = this.pristine;
@@ -34,6 +44,7 @@ class AdForm extends Form {
     const capacity = form.querySelector('#capacity');
     const timeIn = form.querySelector('#timein');
     const timeOut = form.querySelector('#timeout');
+
 
     const setMinPrice = (typeOfHousing) => {
       price.min = HOUSING[typeOfHousing].minPrice;
@@ -86,7 +97,7 @@ class AdForm extends Form {
 
     );
 
-    form.addEventListener('change', (evt) => {
+    form.addEventListener('input', (evt) => {
       if (evt.target === type) {
         setMinPrice(type.value);
         minPrice = HOUSING[type.value].minPrice;
@@ -110,9 +121,19 @@ class AdForm extends Form {
       evt.preventDefault();
       pristine.validate();
     });
+
+  }
+
+  resetHandler() {
+    const resetButton =  this.form.querySelector('.ad-form__reset');
+    resetButton.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      this.form.reset();
+      this.pristine.reset();
+      map.fillFormAddress();
+    });
   }
 }
 
-export {
-  AdForm
-};
+export const formAd = new AdForm('.ad-form');
+
