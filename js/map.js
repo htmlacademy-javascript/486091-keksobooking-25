@@ -3,24 +3,21 @@ import {
 } from './data/main-coordinates.js';
 
 import {
-  points
-} from './data-controller.js';
-
-import {
   AnnouncementCardTemplater
 } from './announcement-card-templater.js';
 
 class Map {
-  constructor(mapId) {
+  constructor() {
     this.formDisActivation('.ad-form');
     this.formDisActivation('.map__filters');
-    this.mapInit(mapId);
-    this.setMapData();
+    this.init();
+    this.SIMILAR_ANNOUNCEMENT_COUNT = 50;
+    //this.setMapData();
     this.createMainMarker();
-    this.fillMapByPoints();
+    //this.fillMapByPoints();
   }
 
-  mapInit(mapId = 'map-canvas') {
+  init(mapId = 'map-canvas') {
     this.map = L.map(mapId)
       .on('load', () => {
         this.formActivation('.ad-form');
@@ -36,8 +33,8 @@ class Map {
     ).addTo(this.map);
   }
 
-  setMapData() {
-    this.points = points;
+  setData(points) {
+    this.points = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
   }
 
   createMainMarker() {
@@ -68,6 +65,13 @@ class Map {
       const formAddress = document.querySelector('#address');
       formAddress.value = `${lat}, ${lng}`;
     });
+    this.mainMarker = marker;
+  }
+
+  resetMainMarker() {
+    const marker = this.mainMarker;
+    marker.remove();
+
   }
 
   createMarker(lat, lng, obj) {
@@ -89,7 +93,7 @@ class Map {
     newMarker.addTo(this.map).bindPopup(popUpCard);
   }
 
-  fillMapByPoints() {
+  fillByPoints() {
     this.points.forEach((obj) => {
       const {
         lat,

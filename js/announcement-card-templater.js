@@ -1,8 +1,4 @@
 import {
-  DataController
-} from './data-controller.js';
-
-import {
   HOUSING
 } from './data/housing.js';
 class AnnouncementCardTemplater {
@@ -113,12 +109,6 @@ class AnnouncementCardTemplater {
   }
 }
 
-const dataController = new DataController;
-export const oneObjectWithRandomData = dataController.createRandomDataObject();
-
-export const card = new AnnouncementCardTemplater(oneObjectWithRandomData);
-
-export const points = dataController.createArrayWithRandomDataObjects();
 
 export {
   AnnouncementCardTemplater
