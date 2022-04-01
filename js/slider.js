@@ -36,19 +36,19 @@ class Slider {
 
   eventsHandler() {
 
-    const sliderElement = this.sliderElement;
-    sliderElement.noUiSlider.on('slide', () => {
-      this.input.value = Number(sliderElement.noUiSlider.get());
+    const element = this.sliderElement;
+    element.noUiSlider.on('slide', () => {
+      this.input.value = Number(element.noUiSlider.get());
       this.pristine.validate(this.input);
     });
 
     this.input.addEventListener('change', () => {
-      sliderElement.noUiSlider.set(this.input.value);
+      element.noUiSlider.set(this.input.value);
     });
 
     const resetButton = document.querySelector('.ad-form__reset');
     resetButton.addEventListener('click', () => {
-      sliderElement.noUiSlider.reset();
+      element.noUiSlider.reset();
     });
   }
 }

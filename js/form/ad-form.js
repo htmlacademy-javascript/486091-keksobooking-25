@@ -9,6 +9,14 @@ import {
   map
 } from './../map.js';
 
+import {
+  ErrorMessage
+} from '../utils/error-message.js';
+
+import {
+  SuccessMessage
+} from '../utils/success-message.js';
+
 class AdForm extends Form {
 
   constructor(formElementSelector) {
@@ -20,7 +28,7 @@ class AdForm extends Form {
 
   }
 
-  initPristine(){
+  initPristine() {
     this.pristine = new Pristine(this.form, {
       classTo: 'ad-form__element',
       errorClass: 'ad-form__element--invalid',
@@ -31,7 +39,7 @@ class AdForm extends Form {
     });
   }
 
-  getPristine(){
+  getPristine() {
     return this.pristine;
   }
 
@@ -119,21 +127,41 @@ class AdForm extends Form {
 
     form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      pristine.validate();
-    });
+      const isValid = pristine.validate();
+      if (isValid) {
+        const formData = new FormData(evt.target);
 
+        fetch('https://25.javascript.pages.academy/keksobooking', {
+          method: 'POST',
+          body: formData,
+
+        }, )
+
+          .then(() => {
+            const success = new SuccessMessage();
+            success.show();
+
+          })
+          .catch(() => {
+            const errorMessage = new ErrorMessage('Успешный успех');
+            errorMessage.show();
+          });
+      }
+    });
   }
 
   resetHandler() {
-    const resetButton =  this.form.querySelector('.ad-form__reset');
+    const resetButton = this.form.querySelector('.ad-form__reset');
     resetButton.addEventListener('click', (evt) => {
       evt.preventDefault();
       this.form.reset();
       this.pristine.reset();
       map.fillFormAddress();
+      map.resetMainMarker();
+      map.createMainMarker();
+      map.map.closePopup();
     });
   }
 }
 
 export const formAd = new AdForm('.ad-form');
-

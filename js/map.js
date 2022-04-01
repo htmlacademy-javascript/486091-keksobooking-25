@@ -3,24 +3,22 @@ import {
 } from './data/main-coordinates.js';
 
 import {
-  points
-} from './data-controller.js';
-
-import {
   AnnouncementCardTemplater
 } from './announcement-card-templater.js';
 
 class Map {
-  constructor(mapId) {
+  constructor() {
     this.formDisActivation('.ad-form');
     this.formDisActivation('.map__filters');
-    this.mapInit(mapId);
-    this.setMapData();
+    this.init();
+    this.SIMILAR_ANNOUNCEMENT_COUNT = 10;
     this.createMainMarker();
-    this.fillMapByPoints();
+    //this.setMapData();
+
+    //this.fillMapByPoints();
   }
 
-  mapInit(mapId = 'map-canvas') {
+  init(mapId = 'map-canvas') {
     this.map = L.map(mapId)
       .on('load', () => {
         this.formActivation('.ad-form');
@@ -34,10 +32,12 @@ class Map {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       },
     ).addTo(this.map);
+
+    this.markerGroup = L.layerGroup().addTo(this.map);
   }
 
-  setMapData() {
-    this.points = points;
+  setData(points) {
+    this.points = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
   }
 
   createMainMarker() {
@@ -68,9 +68,18 @@ class Map {
       const formAddress = document.querySelector('#address');
       formAddress.value = `${lat}, ${lng}`;
     });
+    this.mainMarker = marker;
+  }
+
+  resetMainMarker() {
+    const marker = this.mainMarker;
+    marker.remove();
+
   }
 
   createMarker(lat, lng, obj) {
+
+
     const icon = L.icon({
       iconUrl: './img/pin.svg',
       iconSize: [40, 40],
@@ -86,10 +95,10 @@ class Map {
 
     const createPopUpCard = () => new AnnouncementCardTemplater(obj);
     const popUpCard = createPopUpCard(obj);
-    newMarker.addTo(this.map).bindPopup(popUpCard);
+    newMarker.addTo(this.markerGroup).bindPopup(popUpCard);
   }
 
-  fillMapByPoints() {
+  fillByPoints() {
     this.points.forEach((obj) => {
       const {
         lat,
