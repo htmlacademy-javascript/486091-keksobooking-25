@@ -11,7 +11,7 @@ class ErrorMessage {
 
     if (errorType === 'map') {
       this.textElement.textContent = errorMessageText;
-      this.textElement.textContent = `Похожие объявления не загрузились. Вот такая ошибка: ${errorMessageText}`;
+      this.textElement.textContent = `Похожие объявления не загрузились: ${errorMessageText}`;
       this.button.textContent = 'Ну не загрузились и ладно.';
     }
   }

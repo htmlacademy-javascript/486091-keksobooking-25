@@ -11,9 +11,10 @@ class Map {
     this.formDisActivation('.ad-form');
     this.formDisActivation('.map__filters');
     this.init();
-    this.SIMILAR_ANNOUNCEMENT_COUNT = 50;
-    //this.setMapData();
+    this.SIMILAR_ANNOUNCEMENT_COUNT = 10;
     this.createMainMarker();
+    //this.setMapData();
+
     //this.fillMapByPoints();
   }
 
@@ -26,11 +27,15 @@ class Map {
       })
       .setView(MAIN_COORDINATES, 12);
 
+
+
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       },
     ).addTo(this.map);
+
+    this.markerGroup = L.layerGroup().addTo(this.map);
   }
 
   setData(points) {
@@ -75,6 +80,8 @@ class Map {
   }
 
   createMarker(lat, lng, obj) {
+
+
     const icon = L.icon({
       iconUrl: './img/pin.svg',
       iconSize: [40, 40],
@@ -90,7 +97,7 @@ class Map {
 
     const createPopUpCard = () => new AnnouncementCardTemplater(obj);
     const popUpCard = createPopUpCard(obj);
-    newMarker.addTo(this.map).bindPopup(popUpCard);
+    newMarker.addTo(this.markerGroup).bindPopup(popUpCard);
   }
 
   fillByPoints() {
