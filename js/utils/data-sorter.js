@@ -1,6 +1,6 @@
-import {map} from "../map.js";
-import {ErrorMessage} from "./error-message.js";
-import {formFilter} from "../form/filter-form.js";
+import {map} from '../map.js';
+import {ErrorMessage} from './error-message.js';
+import {formFilter} from '../form/filter-form.js';
 
 class DataSorter { // Класс для сортировки массива с объявлениями
   constructor() {
@@ -45,7 +45,7 @@ class DataSorter { // Класс для сортировки массива с �
         default:
           return false;
       }
-    })// console.log(this.filteredData);
+    });
   }
 
   sortByPrice() {
@@ -62,7 +62,7 @@ class DataSorter { // Класс для сортировки массива с �
         default:
           return false;
       }
-    })
+    });
   }
 
   sortByRooms() {
@@ -75,7 +75,7 @@ class DataSorter { // Класс для сортировки массива с �
         default:
           return false;
       }
-    })
+    });
   }
 
   sortByguests() {
@@ -88,7 +88,7 @@ class DataSorter { // Класс для сортировки массива с �
         default:
           return false;
       }
-    })
+    });
   }
 
   sortByFeatures() {
@@ -103,7 +103,7 @@ class DataSorter { // Класс для сортировки массива с �
           if (obj.offer.features.includes(feature)) {
             i = i + 1;
           }
-        })
+        });
 
         return i === formFilter.features.length;
       });

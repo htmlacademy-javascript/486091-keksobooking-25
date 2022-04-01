@@ -1,11 +1,18 @@
-import {map} from "../map.js";
-import {ErrorMessage} from "./error-message.js";
-import {dataSorter} from "./data-sorter.js";
+import {
+  map
+} from '../map.js';
+import {
+  ErrorMessage
+} from './error-message.js';
+import {
+  dataSorter
+} from './data-sorter.js';
 
 class DataFetcher {
   constructor() {
     this.getDataFromServer();
   }
+
   getDataFromServer() { // Получи данные объявлений с сервера
     fetch('https://25.javascript.pages.academy/keksobooking/data')
       .then((response) => response.json())
@@ -21,13 +28,15 @@ class DataFetcher {
       });
   }
 
-   getData() {
+  getData() {
     return this.data;
-   }
+  }
 }
 
 const dataFetcher = new DataFetcher();
 
-dataFetcher.getData()
+dataFetcher.getData();
 
-export { dataFetcher };
+export {
+  dataFetcher
+};

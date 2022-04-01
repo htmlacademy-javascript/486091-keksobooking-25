@@ -1,20 +1,10 @@
-import {
-  formAd
-} from './form/ad-form.js';
-import {
-  formFilter
-} from './form/filter-form.js';
-import {
-  map
-} from './map.js';
-import {
-  slider
-} from './slider.js';
-import {
-  ErrorMessage
-} from './utils/error-message.js';
-import {dataSorter} from "./utils/data-sorter.js";
-import {dataFetcher} from "./utils/data-fetcher.js";
+import './form/ad-form.js';
+import './form/filter-form.js';
+import  './map.js';
+import './slider.js';
+import './utils/error-message.js';
+import './utils/data-sorter.js';
+import './utils/data-fetcher.js';
 
 /*
 let dataFromServer = []
