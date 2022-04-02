@@ -10,9 +10,9 @@ class Map {
   constructor() {
     this.formDisActivation('.ad-form');
     this.formDisActivation('.map__filters');
-    this.init();
+    //this.init();
     this.SIMILAR_ANNOUNCEMENT_COUNT = 10;
-    this.createMainMarker();
+    //this.createMainMarker();
     //this.setMapData();
 
     //this.fillMapByPoints();
@@ -21,9 +21,9 @@ class Map {
   init(mapId = 'map-canvas') {
     this.map = L.map(mapId)
       .on('load', () => {
-        this.formActivation('.ad-form');
-        this.formActivation('.map__filters');
-        this.fillFormAddress();
+        //this.formActivation('.ad-form');
+        //this.formActivation('.map__filters');
+        //this.fillFormAddress();
       })
       .setView(MAIN_COORDINATES, 12);
 

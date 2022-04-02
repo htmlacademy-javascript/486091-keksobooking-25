@@ -17,6 +17,7 @@ class DataSorter { // Класс для сортировки массива с �
   }
 
   sortAll() { // Отсортируй данные
+
     formFilter.getValue(); // Получи актуальные значения формы фильтрации
     this.filteredData = this.dataFromServer.slice();
     this.sortByType();

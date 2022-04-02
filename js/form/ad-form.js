@@ -16,6 +16,8 @@ import {
 import {
   SuccessMessage
 } from '../utils/success-message.js';
+import {formFilter} from './filter-form.js';
+import {fetcher} from '../utils/fetcher.js';
 
 class AdForm extends Form {
 
@@ -155,11 +157,15 @@ class AdForm extends Form {
     resetButton.addEventListener('click', (evt) => {
       evt.preventDefault();
       this.form.reset();
+      formFilter.element.reset();
       this.pristine.reset();
       map.fillFormAddress();
       map.resetMainMarker();
       map.createMainMarker();
-      map.map.closePopup();
+      // //map.map.closePopup();
+      // map.markerGroup.clearLayers();
+      //
+      // map.fillByPoints();
     });
   }
 }
