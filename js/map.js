@@ -8,8 +8,8 @@ import {
 
 class Map {
   constructor() {
-    this.formDisActivation('.ad-form');
-    this.formDisActivation('.map__filters');
+    //this.formDisActivation('.ad-form');
+    //this.formDisActivation('.map__filters');
     //this.init();
     this.SIMILAR_ANNOUNCEMENT_COUNT = 10;
     //this.createMainMarker();
@@ -36,6 +36,11 @@ class Map {
     this.markerGroup = L.layerGroup().addTo(this.map);
   }
 
+  setDefaultData(points) {
+    this.defaultData = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
+    this.points = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
+  }
+
   setData(points) {
     this.points = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
   }
@@ -53,7 +58,7 @@ class Map {
     }, {
       draggable: true,
       icon: mainPinIcon,
-    }, );
+    },);
 
     marker.addTo(this.map);
 
@@ -78,8 +83,6 @@ class Map {
   }
 
   createMarker(lat, lng, obj) {
-
-
     const icon = L.icon({
       iconUrl: './img/pin.svg',
       iconSize: [40, 40],
@@ -91,15 +94,31 @@ class Map {
       lng,
     }, {
       icon,
-    }, );
+    },);
 
     const createPopUpCard = () => new AnnouncementCardTemplater(obj);
     const popUpCard = createPopUpCard(obj);
     newMarker.addTo(this.markerGroup).bindPopup(popUpCard);
   }
 
+  debounce (callback, timeoutDelay = 1500) {
+    let timeoutId;
+    return (...rest) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+    };
+  };
+
   fillByPoints() {
     this.points.forEach((obj) => {
+      const { lat, lng } = obj.location;
+      this.createMarker(lat, lng, obj);
+    });
+  }
+
+
+  fillByDefault() {
+    this.defaultData.forEach((obj) => {
       const {
         lat,
         lng
@@ -108,8 +127,9 @@ class Map {
     });
   }
 
+
   fillFormAddress() {
-    let { lat, lng } = MAIN_COORDINATES;
+    let {lat, lng} = MAIN_COORDINATES;
 
 
     lat = Number(lat.toFixed(5));
@@ -146,6 +166,13 @@ class Map {
       const element = form.elements[i];
       element.disabled = true;
     }
+  }
+
+  reset() {
+    this.fillFormAddress();
+    this.resetMainMarker();
+    this.createMainMarker();
+    this.fillByDefault();
   }
 }
 

@@ -1,6 +1,9 @@
+import {formAd} from '../form/ad-form.js';
+
 class ErrorMessage {
   constructor(errorType = 'form', errorMessageText) {
     this.setElement(errorType, errorMessageText);
+    this.show()
   }
 
   setElement(errorType, errorMessageText) {
@@ -18,17 +21,42 @@ class ErrorMessage {
 
   show() {
     document.body.appendChild(this.element);
-    const remove = () => {
-      this.close(remove);
-    };
-    this.button.addEventListener('click', remove);
 
-    setTimeout(remove, 103000, remove);
+
+    const removeByClick = (evt) => {
+      this.removeElement();
+      this.removeClickEvent(removeByClick);
+      this.removeKeydownEvent(removeByButton)
+      formAd.activateSubmitButton();
+    };
+
+    const removeByButton = (evt) => {
+        evt.preventDefault();
+        if (evt.code === 'Escape'){
+          this.removeElement();
+          this.removeClickEvent(removeByClick);
+          this.removeKeydownEvent(removeByButton)
+          formAd.activateSubmitButton();
+        }
+    }
+
+    this.button.addEventListener('click', removeByClick);
+    document.addEventListener('click', removeByClick);
+    this.button.addEventListener('keydown', removeByButton);
+    this.button.focus();
   }
 
-  close(cb) {
-    document.body.removeChild(this.element);
-    this.button.removeEventListener('click', cb);
+  removeClickEvent(cb) {
+    this.button.addEventListener('click', cb);
+    document.removeEventListener('click', cb);
+  }
+
+  removeKeydownEvent(cb) {
+    this.button.removeEventListener('keydown', cb);
+  }
+
+  removeElement()  {
+    this.element.remove();
   }
 }
 

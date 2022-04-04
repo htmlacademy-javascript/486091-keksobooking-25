@@ -23,6 +23,10 @@ class FilterForm extends Form {
     //https://stackoverflow.com/questions/590018/getting-all-selected-checkboxes-in-an-array
     this.features = Array.from(this.element.querySelectorAll('input[name=\'features\']:checked')).map((elem) => elem.value);
   }
+
+  reset() {
+    this.element.reset();
+  }
 }
 
 const formFilter = new FilterForm('.map__filters');

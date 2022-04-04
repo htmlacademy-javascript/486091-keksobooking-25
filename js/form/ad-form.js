@@ -17,17 +17,17 @@ import {
   SuccessMessage
 } from '../utils/success-message.js';
 import {formFilter} from './filter-form.js';
-import {fetcher} from '../utils/fetcher.js';
+//import {fetcher} from '../utils/fetcher.js';
 
 class AdForm extends Form {
 
   constructor(formElementSelector) {
     super(formElementSelector);
+    this.submitButton = document.querySelector('.ad-form__submit')
     this.configurePristine();
     this.initPristine();
     this.validate();
     this.resetHandler();
-
   }
 
   initPristine() {
@@ -104,7 +104,6 @@ class AdForm extends Form {
           return '100 ком. не для гостей';
         }
       }
-
     );
 
     form.addEventListener('input', (evt) => {
@@ -126,30 +125,37 @@ class AdForm extends Form {
         setTimeIn();
       }
     });
+  }
 
-    form.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      const isValid = pristine.validate();
-      if (isValid) {
-        const formData = new FormData(evt.target);
+  submitHandler(evt) {
+    const form = this.form;
+    const pristine = this.pristine;
 
-        fetch('https://25.javascript.pages.academy/keksobooking', {
-          method: 'POST',
-          body: formData,
 
-        }, )
+    const isValid = pristine.validate();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+      this.disableSubmitButton();
 
-          .then(() => {
-            const success = new SuccessMessage();
-            success.show();
+      fetch('https://25.javascript.pages.academy/keksobooking', {
+        method: 'POST',
+        body: formData,
 
-          })
-          .catch(() => {
-            const errorMessage = new ErrorMessage('Успешный успех');
-            errorMessage.show();
-          });
-      }
-    });
+      },)
+
+        .then(() => {
+          const success = new SuccessMessage();
+          success.show();
+        })
+        .catch(() => {
+          const errorMessage = new ErrorMessage('Успешный успех');
+          errorMessage.show();
+        })
+        .finally(() => {
+
+        });
+    }
+
   }
 
   resetHandler() {
@@ -168,6 +174,24 @@ class AdForm extends Form {
       // map.fillByPoints();
     });
   }
+
+  reset() {
+    this.form.reset();
+    this.pristine.reset();
+  }
+
+  disableSubmitButton() {
+    this.submitButton.disabled = true;
+    this.submitButton.style.opacity = 0.3;
+    this.submitButton.style.pointerEvents = 'none';
+  }
+
+  activateSubmitButton() {
+    this.submitButton.disabled = false;
+    this.submitButton.style.opacity = 1;
+    this.submitButton.style.pointerEvents = 'initial';
+  }
+
 }
 
 export const formAd = new AdForm('.ad-form');

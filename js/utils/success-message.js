@@ -1,3 +1,7 @@
+import {formAd} from '../form/ad-form.js';
+import {formFilter} from '../form/filter-form.js';
+import {map} from '../map.js';
+
 class SuccessMessage {
   constructor() {
     this.setElement();
@@ -11,22 +15,33 @@ class SuccessMessage {
     document.body.appendChild(this.element);
 
     const removeElement = (evt) => {
-      if (evt.type === 'click' ) {
+      if (evt.type === 'click' || evt.code === 'Escape') {
         this.close(removeElement);
-      }
-      if (evt.key === 'Escape') {
-        this.close(removeElement);
+        formAd.reset();
+        formFilter.reset();
+        map.reset();
+        formAd.activateSubmitButton();
       }
     };
 
     document.addEventListener('click', removeElement);
-    document.addEventListener('keydown', removeElement);
+    this.element.addEventListener('keydown', removeElement);
+    this.element.tabIndex = 1
+    this.element.focus();
   }
 
   close(eventFunction) {
-    document.body.removeChild(this.element);
-    document.removeEventListener('click', eventFunction);
-    document.removeEventListener('keydown', eventFunction);
+    this.removeElement();
+    this.removeEvents(eventFunction);
+  }
+
+  removeEvents(cb) {
+    document.removeEventListener('click', cb);
+    this.element.removeEventListener('keydown', cb);
+  }
+
+  removeElement()  {
+    this.element.remove();
   }
 
 }
