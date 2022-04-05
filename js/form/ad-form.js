@@ -1,33 +1,29 @@
-import {
-  Form
-} from './form.js';
-import {
-  HOUSING
-} from '../data/housing.js';
+import {Form} from './form.js';
+import {HOUSING} from '../data/housing.js';
 
-import {
-  map
-} from './../map.js';
+// import {map} from '../map.js';
 
-import {
-  ErrorMessage
-} from '../utils/error-message.js';
+import {ErrorMessage} from '../utils/error-message.js';
 
-import {
-  SuccessMessage
-} from '../utils/success-message.js';
-import {formFilter} from './filter-form.js';
+import {SuccessMessage} from '../utils/success-message.js';
+// import {formFilter} from './filter-form.js';
 //import {fetcher} from '../utils/fetcher.js';
+
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 class AdForm extends Form {
 
   constructor(formElementSelector) {
     super(formElementSelector);
-    this.submitButton = document.querySelector('.ad-form__submit')
+    this.submitButton = document.querySelector('.ad-form__submit');
     this.configurePristine();
     this.initPristine();
     this.validate();
-    this.resetHandler();
+    this.setAvatarAddImageHandler();
+    this.setAnnouncementsAddImageHandler();
+    // this.resetHandler();
+
+
   }
 
   initPristine() {
@@ -43,6 +39,44 @@ class AdForm extends Form {
 
   getPristine() {
     return this.pristine;
+  }
+
+  setAvatarAddImageHandler() {
+    this.avatarFileChooser = document.querySelector('#avatar');
+    this.avatarPreview = document.querySelector('.ad-form-header__preview img');
+
+    this.avatarFileChooser.addEventListener('change', () => {
+      const file = this.avatarFileChooser.files[0];
+      const fileName = file.name.toLowerCase();
+      const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+      if (matches) {
+        this.avatarPreview.src = URL.createObjectURL(file);
+      }
+    });
+  }
+
+  setAnnouncementsAddImageHandler() {
+    this.imageFileChooser = document.querySelector('#images');
+    this.imagePreviewWrapper = document.querySelector('.ad-form__photo');
+
+
+    this.imageFileChooser.addEventListener('change', () => {
+      const file = this.imageFileChooser.files[0];
+      const fileName = file.name.toLowerCase();
+      const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+      if (matches) {
+        if(!this.imagePreviewWrapper.hasChildNodes()) {
+
+          this.imagePreview = document.createElement('img');
+          this.imagePreview.style.width = '40px';
+          this.imagePreview.style.height = 'auto';
+          this.imagePreview.src = URL.createObjectURL(file);
+          this.imagePreviewWrapper.appendChild(this.imagePreview);
+        } else {
+          this.imagePreview.src = URL.createObjectURL(file);
+        }
+      }
+    });
   }
 
   validate() {
@@ -128,7 +162,6 @@ class AdForm extends Form {
   }
 
   submitHandler(evt) {
-    const form = this.form;
     const pristine = this.pristine;
 
 
@@ -141,7 +174,7 @@ class AdForm extends Form {
         method: 'POST',
         body: formData,
 
-      },)
+      }, )
 
         .then(() => {
           const success = new SuccessMessage();
@@ -158,26 +191,28 @@ class AdForm extends Form {
 
   }
 
-  resetHandler() {
-    const resetButton = this.form.querySelector('.ad-form__reset');
-    resetButton.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      this.form.reset();
-      formFilter.element.reset();
-      this.pristine.reset();
-      map.fillFormAddress();
-      map.resetMainMarker();
-      map.createMainMarker();
-      // //map.map.closePopup();
-      // map.markerGroup.clearLayers();
-      //
-      // map.fillByPoints();
-    });
-  }
+  // resetHandler() {
+  //   const resetButton = this.form.querySelector('.ad-form__reset');
+  //   resetButton.addEventListener('click', (evt) => {
+  //     evt.preventDefault();
+  //     this.form.reset();
+  //     formFilter.element.reset();
+  //     this.pristine.reset();
+  //     map.fillFormAddress();
+  //     map.resetMainMarker();
+  //     map.createMainMarker();
+  //     // //map.map.closePopup();
+  //     // map.markerGroup.clearLayers();
+  //     //
+  //     // map.fillByPoints();
+  //   });
+  // }
 
   reset() {
     this.form.reset();
     this.pristine.reset();
+    this.avatarPreview.src = 'img/muffin-grey.svg';
+    this.imagePreviewWrapper.innerHTML = '';
   }
 
   disableSubmitButton() {

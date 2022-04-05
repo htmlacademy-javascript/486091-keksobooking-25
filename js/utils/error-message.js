@@ -3,7 +3,7 @@ import {formAd} from '../form/ad-form.js';
 class ErrorMessage {
   constructor(errorType = 'form', errorMessageText) {
     this.setElement(errorType, errorMessageText);
-    this.show()
+    this.show();
   }
 
   setElement(errorType, errorMessageText) {
@@ -23,21 +23,21 @@ class ErrorMessage {
     document.body.appendChild(this.element);
 
 
-    const removeByClick = (evt) => {
+    const removeByClick = () => {
       this.removeElement();
       this.removeClickEvent(removeByClick);
-      this.removeKeydownEvent(removeByButton)
+      this.removeKeydownEvent(removeByButton);
       formAd.activateSubmitButton();
     };
 
-    const removeByButton = (evt) => {
-        evt.preventDefault();
-        if (evt.code === 'Escape'){
-          this.removeElement();
-          this.removeClickEvent(removeByClick);
-          this.removeKeydownEvent(removeByButton)
-          formAd.activateSubmitButton();
-        }
+    function removeByButton (evt) {
+      evt.preventDefault();
+      if (evt.code === 'Escape'){
+        this.removeElement();
+        this.removeClickEvent(removeByClick);
+        this.removeKeydownEvent(removeByButton);
+        formAd.activateSubmitButton();
+      }
     }
 
     this.button.addEventListener('click', removeByClick);

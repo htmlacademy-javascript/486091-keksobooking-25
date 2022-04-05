@@ -1,5 +1,4 @@
 import {map} from '../map.js';
-import {ErrorMessage} from './error-message.js';
 import {formFilter} from '../form/filter-form.js';
 
 class DataSorter { // Класс для сортировки массива с объявлениями

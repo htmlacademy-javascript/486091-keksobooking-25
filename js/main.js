@@ -1,17 +1,10 @@
-// import './form/ad-form.js';
-// import './form/filter-form.js';
-// import './map.js';
-// import './slider.js';
-// import './utils/error-message.js';
-// import './utils/data-sorter.js';
-// import './utils/fetcher.js';
 import {app} from './app.js';
 
 app.disableAddAnnouncementForm(); // Блокируем форму добавления объявления
 app.disableFilterAnnouncemensForm(); // Блокируем форму-фильтр
 
 if (app.initMap()) { // И если карта загружена ,то ...
-  app.activateAddAnnouncementForm() // Активируем форму добавления  объявления
+  app.activateAddAnnouncementForm(); // Активируем форму добавления  объявления
   app.addAnnouncementForm.addEventListener('submit', app.sendAnnouncementToServer);
 
 
@@ -28,8 +21,5 @@ if (app.initMap()) { // И если карта загружена ,то ...
 
   app.resetButton.addEventListener('click', app.reset); // Сбрасываем приложение при нажатии на соответствующую кнопку
 }
-
-
-
 
 

@@ -1,5 +1,4 @@
 import {map} from './map.js';
-//import {fetcher} from './utils/fetcher.js';
 import {formAd} from './form/ad-form.js';
 import {formFilter} from './form/filter-form.js';
 import {ErrorMessage} from './utils/error-message.js';
@@ -16,32 +15,30 @@ class App {
   }
 
   disableAddAnnouncementForm() {
-    formAd.disable('.ad-form')
-    console.log('Форма добавления объявления отключена');
+    formAd.disable('.ad-form');
   }
 
   disableFilterAnnouncemensForm() {
     formFilter.disable('.map__filters');
-    console.log('Форма фильтрации отключена');
   }
 
   activateAddAnnouncementForm() {
-   formAd.activate('.ad-form')
-   map.fillFormAddress();
+    formAd.activate('.ad-form');
+    map.fillFormAddress();
   }
 
   activateFilterForm() {
     map.formActivation('.map__filters');
   }
 
-   initMap() {
+  initMap() {
     map.init();
     map.createMainMarker();
     map.SIMILAR_ANNOUNCEMENT_COUNT = 10;
     return map.map._loaded;
   }
 
-  sendAnnouncementToServer(evt){
+  sendAnnouncementToServer(evt) {
     evt.preventDefault();
     formAd.submitHandler(evt);
   }
@@ -67,60 +64,14 @@ class App {
     dataSorter.setFormChangeListener();
   }
 
-
   sortAnnouencements() {
     dataSorter.sortAll();
   }
 
-  async loadAnnouncementsFromServer() {
-    fetcher.getDataFromServer();
-    console.log(fetcher)
-    return fetcher
-  }
-
-  async hasLoadedAnnouncementsFromServer() {
-
-    console.log((await fetcher.isLoad));
-  }
-
-
-
-  checkLoadStatys() {}
-
-  isResetOn() {
-    let isReset = false;
-    const resetButton = document.querySelector('.ad-form__reset');
-    resetButton.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      isReset = true;
-      console.log(isReset)
-      return isReset;
-    })
-
-    return isReset;
-  }
-
   reset() {
-    console.log('Приложение сброшено');
     formAd.reset();
     formFilter.reset();
     map.reset();
-  }
-
-  resetOn() {
-    return true;
-  }
-
-  resetForm() {
-
-  }
-
-  resetSlider() {
-
-  }
-
-  resetMap() {
-
   }
 }
 

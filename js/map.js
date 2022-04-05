@@ -1,10 +1,6 @@
-import {
-  MAIN_COORDINATES
-} from './data/main-coordinates.js';
+import {MAIN_COORDINATES} from './data/main-coordinates.js';
 
-import {
-  AnnouncementCardTemplater
-} from './announcement-card-templater.js';
+import {AnnouncementCardTemplater} from './announcement-card-templater.js';
 
 class Map {
   constructor() {
@@ -100,14 +96,6 @@ class Map {
     const popUpCard = createPopUpCard(obj);
     newMarker.addTo(this.markerGroup).bindPopup(popUpCard);
   }
-
-  debounce (callback, timeoutDelay = 1500) {
-    let timeoutId;
-    return (...rest) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-    };
-  };
 
   fillByPoints() {
     this.points.forEach((obj) => {

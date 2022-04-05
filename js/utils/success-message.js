@@ -26,7 +26,7 @@ class SuccessMessage {
 
     document.addEventListener('click', removeElement);
     this.element.addEventListener('keydown', removeElement);
-    this.element.tabIndex = 1
+    this.element.tabIndex = 1;
     this.element.focus();
   }
 
