@@ -7,22 +7,19 @@ import {dataSorter} from './utils/data-sorter.js';
 
 class App {
   constructor() {
-    this.addAnnouncementForm = document.querySelector('.ad-form');
-    this.filterAnnouencementsForm = document.querySelector('.map__filters');
-    this.submitButton = document.querySelector('.ad-form__submit');
+    this.advertisementForm = document.querySelector('.ad-form');
     this.resetButton = document.querySelector('.ad-form__reset');
-    this.hasLoadedData = false;
   }
 
-  disableAddAnnouncementForm() {
+  disableAdvertisementForm() {
     formAd.disable('.ad-form');
   }
 
-  disableFilterAnnouncemensForm() {
+  disableFilterForm() {
     formFilter.disable('.map__filters');
   }
 
-  activateAddAnnouncementForm() {
+  activateAdvertisementForm() {
     formAd.activate('.ad-form');
     map.fillFormAddress();
   }
@@ -38,7 +35,7 @@ class App {
     return map.map._loaded;
   }
 
-  sendAnnouncementToServer(evt) {
+  sendAdvertisementToServer(evt) {
     evt.preventDefault();
     formAd.submitHandler(evt);
   }
@@ -48,8 +45,7 @@ class App {
       .then((response) => response.json());
   }
 
-  fillMapbySimilarAnnouncements(data) {
-    //map.setData(data);
+  fillMapBySimilarAdvertisements(data) {
     map.setDefaultData(data);
     map.fillByPoints();
   }
@@ -59,13 +55,9 @@ class App {
     errorMessage.show();
   }
 
-  addFilterAnnouncemensForm(dataFromServer) {
+  sortAdvertisements(dataFromServer) {
     dataSorter.getDataFromServer(dataFromServer);
     dataSorter.setFormChangeListener();
-  }
-
-  sortAnnouencements() {
-    dataSorter.sortAll();
   }
 
   reset() {
