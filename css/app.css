@@ -6,3 +6,9 @@
   color: red;
   width: calc(100% - 20px);
 }
+
+.ad-form__photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

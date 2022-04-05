@@ -1,25 +1,25 @@
-import './form/ad-form.js';
-import './form/filter-form.js';
-import  './map.js';
-import './slider.js';
-import './utils/error-message.js';
-import './utils/data-sorter.js';
-import './utils/data-fetcher.js';
+import {app} from './app.js';
 
-/*
-let dataFromServer = []
+app.disableAddAnnouncementForm(); // Блокируем форму добавления объявления
+app.disableFilterAnnouncemensForm(); // Блокируем форму-фильтр
 
-fetch('https://25.javascript.pages.academy/keksobooking/data')
-  .then((response) => response.json())
-  .then((announcements) => {
-    dataFromServer = announcements;
-    map.setData(announcements);
-    map.fillByPoints();
-  })
-  .catch((errorText) => {
-    const errorMessage = new ErrorMessage('map', errorText);
-    errorMessage.show();
-  });
+if (app.initMap()) { // И если карта загружена ,то ...
+  app.activateAddAnnouncementForm(); // Активируем форму добавления  объявления
+  app.addAnnouncementForm.addEventListener('submit', app.sendAnnouncementToServer);
 
 
-*/
+  app.getDataFromServer() // Получаем похожие объявления с сервера
+    .then((dataFromServer) => { // Если мы их получили, то
+      app.fillMapbySimilarAnnouncements(dataFromServer); // Выводим на карту похожие объявления
+      app.activateFilterForm(); // Активируем форму-фильтр
+      app.addFilterAnnouncemensForm(dataFromServer);
+      return dataFromServer;
+    })
+    .catch((errorText) => { // В случае ошибки
+      app.showLoadErrorMessage(errorText);// Показываем текст ошибки пользователю
+    });
+
+  app.resetButton.addEventListener('click', app.reset); // Сбрасываем приложение при нажатии на соответствующую кнопку
+}
+
+

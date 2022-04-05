@@ -31,6 +31,36 @@ class Form {
     Pristine.addMessages(locale, messages);
   }
 
+  disable(formSelector) {
+    const form = document.querySelector(formSelector);
+
+    if (form.classList.contains('ad-form')) {
+      form.classList.add('ad-form--disabled');
+    }
+    if (form.classList.contains('map__filters')) {
+      form.classList.add('map__filters--disabled');
+    }
+    for (let i = 0; i < form.elements.length; i++) {
+      const element = form.elements[i];
+      element.disabled = true;
+    }
+  }
+
+  activate(formSelector) {
+    const form = document.querySelector(formSelector);
+
+    if (form.classList.contains('ad-form')) {
+      form.classList.remove('ad-form--disabled');
+    }
+    if (form.classList.contains('map__filters')) {
+      form.classList.remove('map__filters--disabled');
+    }
+    for (let i = 0; i < form.elements.length; i++) {
+      const element = form.elements[i];
+      element.disabled = false;
+    }
+  }
+
 }
 
 export {

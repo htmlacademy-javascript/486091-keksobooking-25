@@ -1,5 +1,4 @@
 import {map} from '../map.js';
-import {ErrorMessage} from './error-message.js';
 import {formFilter} from '../form/filter-form.js';
 
 class DataSorter { // Класс для сортировки массива с объявлениями
@@ -11,9 +10,21 @@ class DataSorter { // Класс для сортировки массива с �
   }
 
   setFormChangeListener() { // Установи обработчик событий для формы фильтрации
-    formFilter.element.addEventListener('change', () => {
-      this.sortAll();
-    });
+    formFilter.element.addEventListener('change', this.debounce(this.sortAll));
+  }
+
+  debounce (callback, timeoutDelay = 500) {
+    let timeoutId;
+    return (...rest) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+    };
+  }
+
+  addSoredPointsToMap() {
+    map.markerGroup.clearLayers();
+    map.setData(this.filteredData);
+    map.fillByPoints();
   }
 
   sortAll() { // Отсортируй данные
@@ -24,14 +35,11 @@ class DataSorter { // Класс для сортировки массива с �
     this.sortByRooms();
     this.sortByguests();
     this.sortByFeatures();
-    if (this.filteredData.length === 0) {
-      const errorMessage = new ErrorMessage('map', 'Нет объявлений с такими параметрами.');
-      errorMessage.show();
+    const countOfSortedAnnouncements = this.filteredData.length;
+    if (countOfSortedAnnouncements === 0) {
       map.markerGroup.clearLayers();
     } else {
-      map.markerGroup.clearLayers();
-      map.setData(this.filteredData);
-      map.fillByPoints();
+      this.addSoredPointsToMap();
     }
   }
 
@@ -96,7 +104,7 @@ class DataSorter { // Класс для сортировки массива с �
 
       this.filteredData = this.filteredData.filter((obj) => {
         if (!obj.offer.features) {
-          return  false;
+          return false;
         }
         let i = 0;
         formFilter.features.forEach((feature) => {
@@ -108,7 +116,6 @@ class DataSorter { // Класс для сортировки массива с �
         return i === formFilter.features.length;
       });
     }
-
   }
 }
 

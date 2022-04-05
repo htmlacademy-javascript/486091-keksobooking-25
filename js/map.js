@@ -1,18 +1,14 @@
-import {
-  MAIN_COORDINATES
-} from './data/main-coordinates.js';
+import {MAIN_COORDINATES} from './data/main-coordinates.js';
 
-import {
-  AnnouncementCardTemplater
-} from './announcement-card-templater.js';
+import {AnnouncementCardTemplater} from './announcement-card-templater.js';
 
 class Map {
   constructor() {
-    this.formDisActivation('.ad-form');
-    this.formDisActivation('.map__filters');
-    this.init();
+    //this.formDisActivation('.ad-form');
+    //this.formDisActivation('.map__filters');
+    //this.init();
     this.SIMILAR_ANNOUNCEMENT_COUNT = 10;
-    this.createMainMarker();
+    //this.createMainMarker();
     //this.setMapData();
 
     //this.fillMapByPoints();
@@ -21,9 +17,9 @@ class Map {
   init(mapId = 'map-canvas') {
     this.map = L.map(mapId)
       .on('load', () => {
-        this.formActivation('.ad-form');
-        this.formActivation('.map__filters');
-        this.fillFormAddress();
+        //this.formActivation('.ad-form');
+        //this.formActivation('.map__filters');
+        //this.fillFormAddress();
       })
       .setView(MAIN_COORDINATES, 12);
 
@@ -34,6 +30,11 @@ class Map {
     ).addTo(this.map);
 
     this.markerGroup = L.layerGroup().addTo(this.map);
+  }
+
+  setDefaultData(points) {
+    this.defaultData = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
+    this.points = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
   }
 
   setData(points) {
@@ -53,7 +54,7 @@ class Map {
     }, {
       draggable: true,
       icon: mainPinIcon,
-    }, );
+    },);
 
     marker.addTo(this.map);
 
@@ -78,8 +79,6 @@ class Map {
   }
 
   createMarker(lat, lng, obj) {
-
-
     const icon = L.icon({
       iconUrl: './img/pin.svg',
       iconSize: [40, 40],
@@ -91,7 +90,7 @@ class Map {
       lng,
     }, {
       icon,
-    }, );
+    },);
 
     const createPopUpCard = () => new AnnouncementCardTemplater(obj);
     const popUpCard = createPopUpCard(obj);
@@ -100,6 +99,14 @@ class Map {
 
   fillByPoints() {
     this.points.forEach((obj) => {
+      const { lat, lng } = obj.location;
+      this.createMarker(lat, lng, obj);
+    });
+  }
+
+
+  fillByDefault() {
+    this.defaultData.forEach((obj) => {
       const {
         lat,
         lng
@@ -108,8 +115,9 @@ class Map {
     });
   }
 
+
   fillFormAddress() {
-    let { lat, lng } = MAIN_COORDINATES;
+    let {lat, lng} = MAIN_COORDINATES;
 
 
     lat = Number(lat.toFixed(5));
@@ -146,6 +154,13 @@ class Map {
       const element = form.elements[i];
       element.disabled = true;
     }
+  }
+
+  reset() {
+    this.fillFormAddress();
+    this.resetMainMarker();
+    this.createMainMarker();
+    this.fillByDefault();
   }
 }
 
