@@ -1,4 +1,4 @@
-import { formAd } from './ad-form.js';
+import {formAd} from './ad-form.js';
 
 class Slider { // Класс регулирующий работу Nouslider, используемый для ввода цены с помощью мыши
 
