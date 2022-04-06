@@ -1,13 +1,10 @@
-import {
-  Form
-} from './form.js';
+import {Form} from './form.js';
 
-class FilterForm extends Form {
+class FilterForm extends Form { // Класс регулирующий работу формы фильтрации похожих объявлений на карте
   constructor(formElementSelector) {
     super(formElementSelector);
 
     this.element = document.querySelector('.map__filters');
-    this.featuresElement = this.element.querySelectorAll('#housing-features');
     this.getValue();
   }
 
@@ -29,8 +26,4 @@ class FilterForm extends Form {
   }
 }
 
-const formFilter = new FilterForm('.map__filters');
-
-export {
-  formFilter
-};
+export const formFilter = new FilterForm('.map__filters');

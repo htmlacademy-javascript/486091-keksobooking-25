@@ -1,4 +1,4 @@
-import {app} from './app.js';
+import {app} from './modules/app/app.js';
 
 app.disableAdvertisementForm(); // Блокируем форму добавления объявления
 app.disableFilterForm(); // Блокируем форму-фильтр
@@ -21,5 +21,3 @@ if (app.initMap()) { // И если карта загружена ,то ...
 
   app.resetButton.addEventListener('click', app.reset); // Сбрасываем приложение при нажатии на соответствующую кнопку
 }
-
-

@@ -1,11 +1,11 @@
-import {map} from './map.js';
-import {formAd} from './form/ad-form.js';
-import {formFilter} from './form/filter-form.js';
-import {ErrorMessage} from './utils/error-message.js';
-import './slider.js';
-import {dataSorter} from './utils/data-sorter.js';
+import {map} from '../map/map.js';
+import {formAd} from '../form/ad-form.js';
+import {formFilter} from '../form/filter-form.js';
+import {ErrorMessage} from '../../helpers/error-message.js';
+import '../form/slider.js';
+import {dataSorter} from '../../helpers/data-sorter.js';
 
-class App {
+class App { // Абстрактный в философском смысле класс, синхронизирующий работу всех модулей
   constructor() {
     this.advertisementForm = document.querySelector('.ad-form');
     this.resetButton = document.querySelector('.ad-form__reset');
@@ -25,13 +25,12 @@ class App {
   }
 
   activateFilterForm() {
-    map.formActivation('.map__filters');
+    formFilter.activate('.map__filters');
   }
 
   initMap() {
     map.init();
     map.createMainMarker();
-    map.SIMILAR_ANNOUNCEMENT_COUNT = 10;
     return map.map._loaded;
   }
 
@@ -60,7 +59,8 @@ class App {
     dataSorter.setFormChangeListener();
   }
 
-  reset() {
+  reset(evt) {
+    evt.preventDefault();
     formAd.reset();
     formFilter.reset();
     map.reset();

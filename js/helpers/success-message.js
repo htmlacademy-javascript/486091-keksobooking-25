@@ -1,8 +1,8 @@
-import {formAd} from '../form/ad-form.js';
-import {formFilter} from '../form/filter-form.js';
-import {map} from '../map.js';
+import {formAd} from '../modules/form/ad-form.js';
+import {formFilter} from '../modules/form/filter-form.js';
+import {map} from '../modules/map/map.js';
 
-class SuccessMessage {
+class SuccessMessage { // Класс для показа сообщения об успешной отправке формы
   constructor() {
     this.setElement();
   }

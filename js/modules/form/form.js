@@ -1,4 +1,4 @@
-class Form {
+class Form { // Класс родитель для классов формы фильтрации и формы добавления объявления
 
   constructor(formElementSelector) {
     this.formInit(formElementSelector);
