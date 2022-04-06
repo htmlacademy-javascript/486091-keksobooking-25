@@ -2,6 +2,7 @@ import {MAIN_COORDINATES} from '../../settings/main-coordinates.js';
 import {SIMILAR_ANNOUNCEMENT_COUNT} from '../../settings/similar-announcement-count.js';
 import {MAP_ZOOM} from '../../settings/map-zoom.js';
 import {AdvertisementCardTemplater} from '../../helpers/advertisement-card-templater.js';
+import {DECIMAL_COUNT} from '../../settings/decimal-count.js';
 
 class Map { // Класс отвечающий за отрисовку Leaflet и показ меток похожих объявлений
   init(mapId = 'map-canvas') {
@@ -98,8 +99,8 @@ class Map { // Класс отвечающий за отрисовку Leaflet �
 
   fillFormAddress() {
     let {lat, lng} = MAIN_COORDINATES;
-    lat = Number(lat.toFixed(5));
-    lng = Number(lng.toFixed(5));
+    lat = Number(lat.toFixed(DECIMAL_COUNT));
+    lng = Number(lng.toFixed(DECIMAL_COUNT));
 
     const formAddress = document.querySelector('#address');
     formAddress.value = `${lat}, ${lng}`;
