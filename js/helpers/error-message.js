@@ -1,6 +1,6 @@
-import {formAd} from '../form/ad-form.js';
+import {formAd} from '../modules/form/ad-form.js';
 
-class ErrorMessage {
+class ErrorMessage { // Класс для показа сообщений об ошибке
   constructor(errorType = 'form', errorMessageText) {
     this.setElement(errorType, errorMessageText);
     this.show();
@@ -15,35 +15,34 @@ class ErrorMessage {
     if (errorType === 'map') {
       this.textElement.textContent = errorMessageText;
       this.textElement.textContent = `Похожие объявления не загрузились: ${errorMessageText}`;
-      this.button.textContent = 'Ну не загрузились и ладно.';
+      this.button.textContent = 'Закрыть.';
     }
   }
 
   show() {
     document.body.appendChild(this.element);
 
-
-    const removeByClick = () => {
-      this.removeElement();
-      this.removeClickEvent(removeByClick);
-      this.removeKeydownEvent(removeByButton);
-      formAd.activateSubmitButton();
-    };
-
-    function removeByButton (evt) {
-      evt.preventDefault();
-      if (evt.code === 'Escape'){
-        this.removeElement();
-        this.removeClickEvent(removeByClick);
-        this.removeKeydownEvent(removeByButton);
-        formAd.activateSubmitButton();
-      }
-    }
-
-    this.button.addEventListener('click', removeByClick);
-    document.addEventListener('click', removeByClick);
-    this.button.addEventListener('keydown', removeByButton);
+    this.button.addEventListener('click', this.removeElementByClick);
+    document.addEventListener('click', this.removeElementByClick);
+    this.button.addEventListener('keydown', this.removeElementByButton);
     this.button.focus();
+  }
+
+  removeElementByClick () {
+    this.removeElement();
+    this.removeClickEvent(this.removeElementByClick);
+    this.removeKeydownEvent(this.removeElementByButton);
+    formAd.activateSubmitButton();
+  }
+
+  removeElementByButton (evt) {
+    evt.preventDefault();
+    if (evt.code === 'Escape'){
+      this.removeElement();
+      this.removeClickEvent(this.removeElementByClick);
+      this.removeKeydownEvent(this.removeElementByButton);
+      formAd.activateSubmitButton();
+    }
   }
 
   removeClickEvent(cb) {

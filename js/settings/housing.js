@@ -1,4 +1,4 @@
-const HOUSING = {
+export const housing = {
   palace: {
     translate: 'Дворец',
     minPrice: 10000,
@@ -17,5 +17,4 @@ const HOUSING = {
   },
 };
 
-export { HOUSING };
 

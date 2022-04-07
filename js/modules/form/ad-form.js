@@ -1,17 +1,10 @@
+import {housing} from '../../settings/housing.js';
+import {FILE_TYPES} from '../../settings/file-types.js';
 import {Form} from './form.js';
-import {HOUSING} from '../data/housing.js';
+import {ErrorMessage} from '../../helpers/error-message.js';
+import {SuccessMessage} from '../../helpers/success-message.js';
 
-// import {map} from '../map.js';
-
-import {ErrorMessage} from '../utils/error-message.js';
-
-import {SuccessMessage} from '../utils/success-message.js';
-// import {formFilter} from './filter-form.js';
-//import {fetcher} from '../utils/fetcher.js';
-
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-
-class AdForm extends Form {
+class AdForm extends Form { // Класс регулирующий работу формы добавления объявления
 
   constructor(formElementSelector) {
     super(formElementSelector);
@@ -21,9 +14,6 @@ class AdForm extends Form {
     this.validate();
     this.setAvatarAddImageHandler();
     this.setAnnouncementsAddImageHandler();
-    // this.resetHandler();
-
-
   }
 
   initPristine() {
@@ -37,11 +27,7 @@ class AdForm extends Form {
     });
   }
 
-  getPristine() {
-    return this.pristine;
-  }
-
-  setAvatarAddImageHandler() {
+  setAvatarAddImageHandler() { // Установи обработчик добавления изображения аватара
     this.avatarFileChooser = document.querySelector('#avatar');
     this.avatarPreview = document.querySelector('.ad-form-header__preview img');
 
@@ -55,7 +41,7 @@ class AdForm extends Form {
     });
   }
 
-  setAnnouncementsAddImageHandler() {
+  setAnnouncementsAddImageHandler() { // Установи обработчик добавления изображения объявления
     this.imageFileChooser = document.querySelector('#images');
     this.imagePreviewWrapper = document.querySelector('.ad-form__photo');
 
@@ -91,8 +77,8 @@ class AdForm extends Form {
 
 
     const setMinPrice = (typeOfHousing) => {
-      price.min = HOUSING[typeOfHousing].minPrice;
-      price.setAttribute('placeholder', HOUSING[typeOfHousing].minPrice);
+      price.min = housing[typeOfHousing].minPrice;
+      price.setAttribute('placeholder', housing[typeOfHousing].minPrice);
     };
 
     const setTimeIn = () => {
@@ -104,7 +90,7 @@ class AdForm extends Form {
     };
 
     setMinPrice(type.value);
-    let minPrice = HOUSING[type.value].minPrice;
+    let minPrice = housing[type.value].minPrice;
 
     pristine.addValidator(
       price,
@@ -121,11 +107,7 @@ class AdForm extends Form {
           return true;
         } else if (value === '3' && (roomNumber.value === '3')) {
           return true;
-        } else if (value === '0' && (roomNumber.value === '100')) {
-          return true;
-        } else {
-          return false;
-        }
+        } else {return value === '0' && (roomNumber.value === '100');}
       },
       () => {
         if (roomNumber.value === '1') {
@@ -143,7 +125,7 @@ class AdForm extends Form {
     form.addEventListener('input', (evt) => {
       if (evt.target === type) {
         setMinPrice(type.value);
-        minPrice = HOUSING[type.value].minPrice;
+        minPrice = housing[type.value].minPrice;
         pristine.validate(price);
       }
 
@@ -181,32 +163,11 @@ class AdForm extends Form {
           success.show();
         })
         .catch(() => {
-          const errorMessage = new ErrorMessage('Успешный успех');
+          const errorMessage = new ErrorMessage();
           errorMessage.show();
-        })
-        .finally(() => {
-
         });
     }
-
   }
-
-  // resetHandler() {
-  //   const resetButton = this.form.querySelector('.ad-form__reset');
-  //   resetButton.addEventListener('click', (evt) => {
-  //     evt.preventDefault();
-  //     this.form.reset();
-  //     formFilter.element.reset();
-  //     this.pristine.reset();
-  //     map.fillFormAddress();
-  //     map.resetMainMarker();
-  //     map.createMainMarker();
-  //     // //map.map.closePopup();
-  //     // map.markerGroup.clearLayers();
-  //     //
-  //     // map.fillByPoints();
-  //   });
-  // }
 
   reset() {
     this.form.reset();
@@ -217,16 +178,15 @@ class AdForm extends Form {
 
   disableSubmitButton() {
     this.submitButton.disabled = true;
-    this.submitButton.style.opacity = 0.3;
+    this.submitButton.style.opacity = '0.3';
     this.submitButton.style.pointerEvents = 'none';
   }
 
   activateSubmitButton() {
     this.submitButton.disabled = false;
-    this.submitButton.style.opacity = 1;
+    this.submitButton.style.opacity = '1';
     this.submitButton.style.pointerEvents = 'initial';
   }
-
 }
 
 export const formAd = new AdForm('.ad-form');

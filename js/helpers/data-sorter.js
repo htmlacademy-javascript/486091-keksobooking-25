@@ -1,7 +1,7 @@
-import {map} from '../map.js';
-import {formFilter} from '../form/filter-form.js';
+import {map} from '../modules/map/map.js';
+import {formFilter} from '../modules/form/filter-form.js';
 
-class DataSorter { // Класс для сортировки массива с объявлениями
+class DataSorter { // Класс для сортировки массива с объявлениями с помощью фильтра
   constructor() {
   }
 
@@ -33,7 +33,7 @@ class DataSorter { // Класс для сортировки массива с �
     this.sortByType();
     this.sortByPrice();
     this.sortByRooms();
-    this.sortByguests();
+    this.sortByGuests();
     this.sortByFeatures();
     const countOfSortedAnnouncements = this.filteredData.length;
     if (countOfSortedAnnouncements === 0) {
@@ -86,7 +86,7 @@ class DataSorter { // Класс для сортировки массива с �
     });
   }
 
-  sortByguests() {
+  sortByGuests() {
     this.filteredData = this.filteredData.filter((obj) => {
       switch (formFilter.guests) {
         case 'any':

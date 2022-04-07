@@ -1,18 +1,18 @@
-import {app} from './app.js';
+import {app} from './modules/app/app.js';
 
-app.disableAddAnnouncementForm(); // Блокируем форму добавления объявления
-app.disableFilterAnnouncemensForm(); // Блокируем форму-фильтр
+app.disableAdvertisementForm(); // Блокируем форму добавления объявления
+app.disableFilterForm(); // Блокируем форму-фильтр
 
 if (app.initMap()) { // И если карта загружена ,то ...
-  app.activateAddAnnouncementForm(); // Активируем форму добавления  объявления
-  app.addAnnouncementForm.addEventListener('submit', app.sendAnnouncementToServer);
+  app.activateAdvertisementForm(); // Активируем форму добавления  объявления
+  app.advertisementForm.addEventListener('submit', app.sendAdvertisementToServer);
 
 
   app.getDataFromServer() // Получаем похожие объявления с сервера
     .then((dataFromServer) => { // Если мы их получили, то
-      app.fillMapbySimilarAnnouncements(dataFromServer); // Выводим на карту похожие объявления
+      app.fillMapBySimilarAdvertisements(dataFromServer); // Выводим на карту похожие объявления
       app.activateFilterForm(); // Активируем форму-фильтр
-      app.addFilterAnnouncemensForm(dataFromServer);
+      app.sortAdvertisements(dataFromServer);
       return dataFromServer;
     })
     .catch((errorText) => { // В случае ошибки
@@ -21,5 +21,3 @@ if (app.initMap()) { // И если карта загружена ,то ...
 
   app.resetButton.addEventListener('click', app.reset); // Сбрасываем приложение при нажатии на соответствующую кнопку
 }
-
-

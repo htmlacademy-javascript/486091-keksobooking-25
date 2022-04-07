@@ -1,6 +1,6 @@
-import { formAd } from './form/ad-form.js';
+import {formAd} from './ad-form.js';
 
-class Slider {
+class Slider { // Класс регулирующий работу Nouslider, используемый для ввода цены с помощью мыши
 
   constructor(sliderCssSelector, formInputCssSelector) {
     this.setSliderElemnt(sliderCssSelector);

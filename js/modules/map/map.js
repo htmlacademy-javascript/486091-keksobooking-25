@@ -1,27 +1,14 @@
-import {MAIN_COORDINATES} from './data/main-coordinates.js';
+import {MAIN_COORDINATES} from '../../settings/main-coordinates.js';
+import {SIMILAR_ANNOUNCEMENT_COUNT} from '../../settings/similar-announcement-count.js';
+import {MAP_ZOOM} from '../../settings/map-zoom.js';
+import {AdvertisementCardTemplater} from '../../helpers/advertisement-card-templater.js';
+import {DECIMAL_COUNT} from '../../settings/decimal-count.js';
 
-import {AnnouncementCardTemplater} from './announcement-card-templater.js';
-
-class Map {
-  constructor() {
-    //this.formDisActivation('.ad-form');
-    //this.formDisActivation('.map__filters');
-    //this.init();
-    this.SIMILAR_ANNOUNCEMENT_COUNT = 10;
-    //this.createMainMarker();
-    //this.setMapData();
-
-    //this.fillMapByPoints();
-  }
-
+class Map { // Класс отвечающий за отрисовку Leaflet и показ меток похожих объявлений
   init(mapId = 'map-canvas') {
     this.map = L.map(mapId)
-      .on('load', () => {
-        //this.formActivation('.ad-form');
-        //this.formActivation('.map__filters');
-        //this.fillFormAddress();
-      })
-      .setView(MAIN_COORDINATES, 12);
+      .on('load', () => {})
+      .setView(MAIN_COORDINATES, MAP_ZOOM);
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -33,12 +20,12 @@ class Map {
   }
 
   setDefaultData(points) {
-    this.defaultData = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
-    this.points = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
+    this.defaultData = points.slice(0, SIMILAR_ANNOUNCEMENT_COUNT);
+    this.points = points.slice(0, SIMILAR_ANNOUNCEMENT_COUNT);
   }
 
   setData(points) {
-    this.points = points.slice(0, this.SIMILAR_ANNOUNCEMENT_COUNT);
+    this.points = points.slice(0, SIMILAR_ANNOUNCEMENT_COUNT);
   }
 
   createMainMarker() {
@@ -48,10 +35,7 @@ class Map {
       iconAnchor: [0, 0],
     });
 
-    const marker = L.marker({
-      lat: 35.68950,
-      lng: 139.69171,
-    }, {
+    const marker = L.marker(MAIN_COORDINATES, {
       draggable: true,
       icon: mainPinIcon,
     },);
@@ -75,7 +59,6 @@ class Map {
   resetMainMarker() {
     const marker = this.mainMarker;
     marker.remove();
-
   }
 
   createMarker(lat, lng, obj) {
@@ -92,7 +75,7 @@ class Map {
       icon,
     },);
 
-    const createPopUpCard = () => new AnnouncementCardTemplater(obj);
+    const createPopUpCard = () => new AdvertisementCardTemplater(obj);
     const popUpCard = createPopUpCard(obj);
     newMarker.addTo(this.markerGroup).bindPopup(popUpCard);
   }
@@ -104,7 +87,6 @@ class Map {
     });
   }
 
-
   fillByDefault() {
     this.defaultData.forEach((obj) => {
       const {
@@ -115,52 +97,22 @@ class Map {
     });
   }
 
-
   fillFormAddress() {
     let {lat, lng} = MAIN_COORDINATES;
+    lat = Number(lat.toFixed(DECIMAL_COUNT));
+    lng = Number(lng.toFixed(DECIMAL_COUNT));
 
-
-    lat = Number(lat.toFixed(5));
-    lng = Number(lng.toFixed(5));
     const formAddress = document.querySelector('#address');
     formAddress.value = `${lat}, ${lng}`;
   }
 
-  formActivation(formSelector) {
-    const form = document.querySelector(formSelector);
-
-    if (form.classList.contains('ad-form')) {
-      form.classList.remove('ad-form--disabled');
-    }
-    if (form.classList.contains('map__filters')) {
-      form.classList.remove('map__filters--disabled');
-    }
-    for (let i = 0; i < form.elements.length; i++) {
-      const element = form.elements[i];
-      element.disabled = false;
-    }
-  }
-
-  formDisActivation(formSelector) {
-    const form = document.querySelector(formSelector);
-
-    if (form.classList.contains('ad-form')) {
-      form.classList.add('ad-form--disabled');
-    }
-    if (form.classList.contains('map__filters')) {
-      form.classList.add('map__filters--disabled');
-    }
-    for (let i = 0; i < form.elements.length; i++) {
-      const element = form.elements[i];
-      element.disabled = true;
-    }
-  }
-
   reset() {
-    this.fillFormAddress();
+    this.markerGroup.clearLayers();
+    this.map.setView(MAIN_COORDINATES, MAP_ZOOM);
+    this.fillByDefault();
     this.resetMainMarker();
     this.createMainMarker();
-    this.fillByDefault();
+    this.fillFormAddress();
   }
 }
 

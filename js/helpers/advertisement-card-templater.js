@@ -1,7 +1,6 @@
-import {
-  HOUSING
-} from './data/housing.js';
-class AnnouncementCardTemplater {
+import {housing} from '../settings/housing.js';
+
+class AdvertisementCardTemplater { // Создаёт из шаблона элемент для балуна в метках похожих объявлений
 
   constructor(objectWithData) {
     this.setData(objectWithData);
@@ -55,7 +54,7 @@ class AnnouncementCardTemplater {
   }
 
   setTextContentForTypeElement(typeOfHousing) {
-    return HOUSING[typeOfHousing].translate;
+    return housing[typeOfHousing].translate;
   }
 
   fillByFeaturesItems(data, featuresWrapperElement) {
@@ -111,5 +110,5 @@ class AnnouncementCardTemplater {
 
 
 export {
-  AnnouncementCardTemplater
+  AdvertisementCardTemplater
 };
