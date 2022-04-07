@@ -6,7 +6,6 @@ class Form { // Класс родитель для классов формы ф�
 
   formInit(formElementSelector) {
     this.form = document.querySelector(formElementSelector);
-    this.formElements = this.form.elements;
   }
 
   configurePristine() {
