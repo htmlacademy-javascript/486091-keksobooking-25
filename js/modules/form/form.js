@@ -6,6 +6,7 @@ class Form { // Класс родитель для классов формы ф�
 
   formInit(formElementSelector) {
     this.form = document.querySelector(formElementSelector);
+    this.formElements = Array.from(this.form.elements);
   }
 
   configurePristine() {
@@ -39,10 +40,11 @@ class Form { // Класс родитель для классов формы ф�
     if (form.classList.contains('map__filters')) {
       form.classList.add('map__filters--disabled');
     }
-    for (let i = 0; i < form.elements.length; i++) {
-      const element = form.elements[i];
+
+    this.formElements.forEach((element) => {
       element.disabled = true;
-    }
+    });
+
   }
 
   activate(formSelector) {
@@ -54,10 +56,10 @@ class Form { // Класс родитель для классов формы ф�
     if (form.classList.contains('map__filters')) {
       form.classList.remove('map__filters--disabled');
     }
-    for (let i = 0; i < form.elements.length; i++) {
-      const element = form.elements[i];
+
+    this.formElements.forEach((element) => {
       element.disabled = false;
-    }
+    });
   }
 
 }
