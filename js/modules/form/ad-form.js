@@ -159,9 +159,14 @@ class AdForm extends Form { // Класс регулирующий работу 
 
       }, )
 
-        .then(() => {
-          const success = new SuccessMessage();
-          success.show();
+        .then((response) => {
+          if (response.ok) {
+            const success = new SuccessMessage();
+            success.show();
+          } else {
+            throw new Error();
+          }
+
         })
         .catch(() => {
           const errorMessage = new ErrorMessage();
