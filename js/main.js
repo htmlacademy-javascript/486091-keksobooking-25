@@ -5,7 +5,7 @@ app.disableFilterForm(); // Блокируем форму-фильтр
 
 if (app.initMap()) { // И если карта загружена ,то ...
   app.activateAdvertisementForm(); // Активируем форму добавления  объявления
-  app.advertisementForm.addEventListener('submit', app.sendAdvertisementToServer);
+  app.advertisementForm.addEventListener('submit', app.onAdvertisementFormSubmit);
 
 
   app.getDataFromServer() // Получаем похожие объявления с сервера
@@ -19,5 +19,5 @@ if (app.initMap()) { // И если карта загружена ,то ...
       app.showLoadErrorMessage(errorText);// Показываем текст ошибки пользователю
     });
 
-  app.resetButton.addEventListener('click', app.reset); // Сбрасываем приложение при нажатии на соответствующую кнопку
+  app.resetButton.addEventListener('click', app.onResetButtonClick); // Сбрасываем приложение при нажатии на соответствующую кнопку
 }

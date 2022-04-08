@@ -34,9 +34,9 @@ class App { // Абстрактный в философском смысле к�
     return map.map._loaded;
   }
 
-  sendAdvertisementToServer(evt) {
+  onAdvertisementFormSubmit(evt) {
     evt.preventDefault();
-    formAd.submitHandler(evt);
+    formAd.sendAdvertisementToServer(evt);
   }
 
   getDataFromServer() {
@@ -59,7 +59,7 @@ class App { // Абстрактный в философском смысле к�
     dataSorter.setFormChangeListener();
   }
 
-  reset(evt) {
+  onResetButtonClick(evt) {
     evt.preventDefault();
     formAd.reset();
     formFilter.reset();

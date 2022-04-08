@@ -14,9 +14,9 @@ class SuccessMessage { // Класс для показа сообщения об
   show() {
     document.body.appendChild(this.element);
 
-    const removeElement = (evt) => {
+    const successMessageClickOrKeydownHandler = (evt) => {
       if (evt.type === 'click' || evt.code === 'Escape') {
-        this.close(removeElement);
+        this.close(successMessageClickOrKeydownHandler);
         formAd.reset();
         formFilter.reset();
         map.reset();
@@ -24,8 +24,8 @@ class SuccessMessage { // Класс для показа сообщения об
       }
     };
 
-    document.addEventListener('click', removeElement);
-    this.element.addEventListener('keydown', removeElement);
+    document.addEventListener('click', successMessageClickOrKeydownHandler);
+    this.element.addEventListener('keydown', successMessageClickOrKeydownHandler);
     this.element.tabIndex = 1;
     this.element.focus();
   }

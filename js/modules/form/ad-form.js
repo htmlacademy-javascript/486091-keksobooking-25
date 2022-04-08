@@ -144,7 +144,7 @@ class AdForm extends Form { // Класс регулирующий работу 
     });
   }
 
-  submitHandler(evt) {
+  sendAdvertisementToServer(evt) {
     const pristine = this.pristine;
 
 

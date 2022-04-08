@@ -7,7 +7,7 @@ class Slider { // Класс регулирующий работу Nouslider, и
     this.setRelatedFormInput(formInputCssSelector);
     this.setSliderConfiguration();
     this.setValidator();
-    this.eventsHandler();
+    this.controlEventHandlers();
   }
 
   setSliderConfiguration() {
@@ -34,7 +34,7 @@ class Slider { // Класс регулирующий работу Nouslider, и
     this.pristine = formAd.pristine;
   }
 
-  eventsHandler() {
+  controlEventHandlers() {
 
     const element = this.element;
     element.noUiSlider.on('slide', () => {
