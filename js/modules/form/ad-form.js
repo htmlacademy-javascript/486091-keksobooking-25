@@ -9,6 +9,7 @@ class AdForm extends Form { // Класс регулирующий работу 
   constructor(formElementSelector) {
     super(formElementSelector);
     this.submitButton = document.querySelector('.ad-form__submit');
+    this.sliderElement = document.querySelector('.ad-form__slider');
     this.configurePristine();
     this.initPristine();
     this.validate();
@@ -172,6 +173,7 @@ class AdForm extends Form { // Класс регулирующий работу 
   reset() {
     this.form.reset();
     this.pristine.reset();
+    this.sliderElement.noUiSlider.reset();
     this.avatarPreview.src = 'img/muffin-grey.svg';
     this.imagePreviewWrapper.innerHTML = '';
   }
