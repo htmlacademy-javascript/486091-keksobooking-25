@@ -3,15 +3,15 @@ import {formAd} from './ad-form.js';
 class Slider { // Класс регулирующий работу Nouslider, используемый для ввода цены с помощью мыши
 
   constructor(sliderCssSelector, formInputCssSelector) {
-    this.setSliderElemnt(sliderCssSelector);
+    this.setElement(sliderCssSelector);
     this.setRelatedFormInput(formInputCssSelector);
     this.setSliderConfiguration();
     this.setValidator();
-    this.eventsHandler();
+    this.controlEventHandlers();
   }
 
   setSliderConfiguration() {
-    noUiSlider.create(this.sliderElement, {
+    noUiSlider.create(this.element, {
       start: [0],
       step: 1,
       range: {
@@ -22,8 +22,8 @@ class Slider { // Класс регулирующий работу Nouslider, и
     });
   }
 
-  setSliderElemnt(sliderCssSelector) {
-    this.sliderElement = document.querySelector(sliderCssSelector);
+  setElement(sliderCssSelector) {
+    this.element = document.querySelector(sliderCssSelector);
   }
 
   setRelatedFormInput(formInputCssSelector) {
@@ -34,9 +34,9 @@ class Slider { // Класс регулирующий работу Nouslider, и
     this.pristine = formAd.pristine;
   }
 
-  eventsHandler() {
+  controlEventHandlers() {
 
-    const element = this.sliderElement;
+    const element = this.element;
     element.noUiSlider.on('slide', () => {
       this.input.value = Number(element.noUiSlider.get());
       this.pristine.validate(this.input);

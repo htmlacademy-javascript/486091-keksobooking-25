@@ -43,9 +43,9 @@ class AdvertisementCardTemplater { // Создаёт из шаблона эле�
     addressElement.textContent = address;
     priceElement.textContent = `${price} ₽/ночь`;
     typeElement.textContent = this.setTextContentForTypeElement(type);
-    this.declOfNum(1, ['гость', 'гостя', 'гостей']);
+    this.setWordDeclension(1, ['гость', 'гостя', 'гостей']);
     timeElement.textContent = `Заезд после ${checkin}, выезд до  ${checkout}`;
-    capacityElement.textContent = `${rooms} ${this.declOfNum(rooms, ['комната', 'комнаты', 'комнат'])} для ${guests} ${this.declOfNum(guests, ['гостя', 'гостей', 'гостей'])}`;
+    capacityElement.textContent = `${rooms} ${this.setWordDeclension(rooms, ['комната', 'комнаты', 'комнат'])} для ${guests} ${this.setWordDeclension(guests, ['гостя', 'гостей', 'гостей'])}`;
     this.fillByFeaturesItems(features, featuresWrapperElement);
     this.fillByPhotos(photos, photosWrapperElement);
     this.fillDescriptionElement(description, descriptionElement);
@@ -102,7 +102,7 @@ class AdvertisementCardTemplater { // Создаёт из шаблона эле�
     }
   }
 
-  declOfNum(number, words) {
+  setWordDeclension(number, words) {
     //https://realadmin.ru/coding/sklonenie-na-javascript.html
     return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];
   }
