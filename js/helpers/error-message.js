@@ -34,13 +34,13 @@ class ErrorMessage { // Класс для показа сообщений об �
       formAd.activateSubmitButton();
     };
 
-    const errorShowMessageClickOrKeydownHandler = (evt) => {
+    const onErrorShowMessageButtonAndDocumentKeydownOrClick = (evt) => {
       removeElement(evt);
     };
 
-    this.button.addEventListener('click', errorShowMessageClickOrKeydownHandler);
-    document.addEventListener('click', errorShowMessageClickOrKeydownHandler);
-    this.button.addEventListener('keydown', errorShowMessageClickOrKeydownHandler);
+    this.button.addEventListener('click', onErrorShowMessageButtonAndDocumentKeydownOrClick);
+    document.addEventListener('click', onErrorShowMessageButtonAndDocumentKeydownOrClick);
+    this.button.addEventListener('keydown', onErrorShowMessageButtonAndDocumentKeydownOrClick);
     this.button.focus();
   }
 
